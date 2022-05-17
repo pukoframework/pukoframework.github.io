@@ -111,7 +111,7 @@ php puko setup secure
 
 Routes located in `config/routes.php` and holds all routing information. This file supposed as read-only because most of the puko routing done with `pukoconsole` tools included as _dev-dependency_.
 
-See [Routing]({{ site.baseurl }}{% link docs/routing.md %}) for more information.
+See [Routing]({{ site.baseurl }}{% link docs/basics/routing.md %}) for more information.
 
 ## Custom <file>.php
 
