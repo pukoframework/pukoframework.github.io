@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 10
 ---
 
-# Search
+# System Class
 {: .no_toc }
 
 ## Table of contents

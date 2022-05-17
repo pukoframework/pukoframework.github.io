@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 1
 ---
 
-# Search
+# Routing
 {: .no_toc }
 
 ## Table of contents

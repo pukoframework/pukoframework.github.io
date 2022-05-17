@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 9
 ---
 
-# Search
+# Framework
 {: .no_toc }
 
 ## Table of contents

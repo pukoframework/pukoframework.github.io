@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Routing
+title: View
 parent: Basics
 nav_order: 4
 ---
 
-# Search
+# View
 {: .no_toc }
 
 ## Table of contents

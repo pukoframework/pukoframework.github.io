@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 2
 ---
 
-# Search
+# Controller
 {: .no_toc }
 
 ## Table of contents

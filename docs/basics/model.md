@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Controller
+title: Model
 parent: Basics
 nav_order: 3
 ---
 
-# Search
+# Model
 {: .no_toc }
 
 ## Table of contents

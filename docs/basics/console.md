@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 8
 ---
 
-# Search
+# Console
 {: .no_toc }
 
 ## Table of contents

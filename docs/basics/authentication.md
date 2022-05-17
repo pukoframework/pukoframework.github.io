@@ -5,7 +5,7 @@ parent: Basics
 nav_order: 6
 ---
 
-# Search
+# Authentication
 {: .no_toc }
 
 ## Table of contents
