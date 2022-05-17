@@ -72,6 +72,6 @@ email, or any other method with the owners of this repository before making a ch
 
 ### Code of Conduct
 
-Just the Docs is committed to fostering a welcoming community.
+Puko Framework is committed to fostering a welcoming community.
 
 [View our Code of Conduct](https://github.com/pukoframework/pukoframework.github.io/tree/master/CODE_OF_CONDUCT.md) on our GitHub repository.

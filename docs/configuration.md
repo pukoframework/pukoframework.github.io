@@ -20,179 +20,123 @@ Puko Framework has some specific configuration parameters that can be defined in
 ---
 
 
-View this site's [config](https://github.com/velliz/puko/tree/master/config) file as an example.
+All of configuration needed is already bind into `.env` file, but if you want to control more configuration in your workflow, all file is grouped together in one directory. View via github repo site's [config](https://github.com/velliz/puko/tree/master/config) as an example.
 
 
-## Site logo
+## app.php
 
-```yaml
-# Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/puko-material-100.png"
+App `config/app.php` used to hold read-only variable and later can retrieved in controller for usages.
+App file structured as PHP array and consists 3 root identifier `const`, `cache` and `logs`.
+
+- const
+
+You can register your constant in `const` sections of file. For example:
+
+```php
+<?php return [
+    'const' => [
+        'API' => 'https://localhost:3000/api/',
+    ]
+    ...
+];
 ```
 
-## Search
+- cache
 
-```yaml
-# Enable or disable the site search
-# Supports true (default) or false
-search_enabled: true
+By default, Puko Framework utilize memcached as cache driver. You can configure the connection settings here.
 
-search:
-  # Split pages into sections that can be searched individually
-  # Supports 1 - 6, default: 2
-  heading_level: 2
-  # Maximum amount of previews per search result
-  # Default: 3
-  previews: 3
-  # Maximum amount of words to display before a matched word in the preview
-  # Default: 5
-  preview_words_before: 5
-  # Maximum amount of words to display after a matched word in the preview
-  # Default: 10
-  preview_words_after: 10
-  # Set the search token separator
-  # Default: /[\s\-/]+/
-  # Example: enable support for hyphenated search words
-  tokenizer_separator: /[\s/]+/
-  # Display the relative url in search results
-  # Supports true (default) or false
-  rel_url: true
-  # Enable or disable the search button that appears in the bottom right corner of every page
-  # Supports true or false (default)
-  button: false
+```php
+<?php return [
+    ...
+    'cache' => [
+        'kind' => 'MEMCACHED',
+        'expired' => 100,
+        'host' => 'localhost',
+        'port' => 11211,
+    ]
+    ...
+];
 ```
 
-## Aux links
+> cache implementation coming soon
 
-```yaml
-# Aux links for the upper right navigation
-aux_links:
-  "Just the Docs on GitHub":
-    - "//github.com/pmarsceill/just-the-docs"
+- logs
 
-# Makes Aux links open in a new tab. Default is false
-aux_links_new_tab: false
+Puko utilize logs as a custom hook with build in **Slack Incoming WebHooks** for error reporting, by default set to false. If you have slack accounts, you can setup a **Incoming WebHook** URL and paste it in Slack url. Then in the Puko Framework Slack section, set the `active` state to `true`.
+
+> custom logs is coming soon
+
+## database.php
+
+Database configurations located at `config/database.php` folder. You can specify more than one connection because puko uses schema name for each connection string. Puko also scaffolds database configuration process with `pukoconsole` tools included as _dev-dependency_.
+
+> as version 1.1.6 puko only supports MySQL and MSSQL database engine
+
+```bash
+php puko setup db
 ```
 
-## Heading anchor links
+or if you only refresh the database (without re-write the database configuration): `php puko refresh db`
 
-```yaml
-# Heading anchor links appear on hover over h1-h6 tags in page content
-# allowing users to deep link to a particular heading on a page.
-#
-# Supports true (default) or false
-heading_anchors: true
+Items asked:
+
+|Items|Description|Examples|
+|---|---|---|
+|Database Type|Only supports MySQL and MSSQL for now|mysql|
+|Hostname|Databaase IP address|localhost|
+|Port|Databaase port address|3306|
+|Schema Name|Schema name as identifier for multiple database|primary|
+|Database Name|Name of databases|inventory|
+|Username|User databases|root|
+|Password|Password databases|******|
+|Driver|Database Driver|mysql|
+
+> At the end wizard is asking for another connection you can answer with y/n
+
+You can refer to database section for detailed information.
+
+## encryption.php
+
+Encryption required to secure many aspects in our applications. Puko framework mostly using this to secure user authentication data in several forms. Sessions, Cookies, and Bearer. Puko can scaffolds this process with `pukoconsole` tools included as _dev-dependency_.
+
+> Puko using AES-256-CBC as encryption algorithms
+
+To start configure Encryption, you can type in _console/terminal/powershell_:
+
+```text
+php puko setup secure
 ```
 
-## Footer content
+## routes.php
 
-```yaml
-# Footer content
-# appears at the bottom of every page's main content
-# Note: The footer_content option is deprecated and will be removed in a future major release. Please use `_includes/footer_custom.html` for more robust
-markup / liquid-based content.
-footer_content: "Copyright &copy; 2017-2020 Patrick Marsceill. Distributed by an <a href=\"https://github.com/pmarsceill/just-the-docs/tree/master/LICENSE.txt\">MIT license.</a>"
+Routes located in `config/routes.php` and holds all routing information. This file supposed as read-only because most of the puko routing done with `pukoconsole` tools included as _dev-dependency_.
 
-# Footer last edited timestamp
-last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
-last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
+See [Routing]({{ site.baseurl }}{% link docs/routing.md %}) for more information.
 
-# Footer "Edit this page on GitHub" link text
-gh_edit_link: true # show or hide edit this page link
-gh_edit_link_text: "Edit this page on GitHub."
-gh_edit_repository: "https://github.com/pmarsceill/just-the-docs" # the github URL for your repo
-gh_edit_branch: "master" # the branch that your docs is served from
-# gh_edit_source: docs # the source that your files originate from
-gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately
+## Custom <file>.php
+
+Puko framework can also create custom config file. for example if you want to add RabbitMQ message queue you can create new `config/rabbitmq.php` file
+
+```php
+<?php return [
+    'username' => 'administrator',
+    'password' => '*******',
+    'host' => '192.16.60.31',
+    'port' => '5678'
+];
 ```
 
-_note: `footer_content` is deprecated, but still supported. For a better experience we have moved this into an include called `_includes/footer_custom.html` which will allow for robust markup / liquid-based content._
+_note: Custom `<file>.php` is available trough app lifecycles via `Config::Data('<file>')`. Which will allow for more control and expansion of all the functionality of the framework itself._
 
-- the "page last modified" data will only display if a page has a key called `last_modified_date`, formatted in some readable date format
-- `last_edit_time_format` uses Ruby's DateTime formatter; see examples and more information [at this link.](https://apidock.com/ruby/DateTime/strftime)
-- `gh_edit_repository` is the URL of the project's GitHub repository
-- `gh_edit_branch` is the branch that the docs site is served from; defaults to `master`
-- `gh_edit_source` is the source directory that your project files are stored in (should be the same as [site.source](https://jekyllrb.com/docs/configuration/options/))
-- `gh_edit_view_mode` is `"tree"` by default, which brings the user to the github page; switch to `"edit"` to bring the user directly into editing mode
+You can retrieve the value with this code snippet:
 
-## Color scheme
+```php
+//initialize config skeleton
+$config = pukoframework\config\Config::Data('rabbitmq');
 
-```yaml
-# Color scheme supports "light" (default) and "dark"
-color_scheme: dark
+//retrieve the value
+$config['username'];
+$config['password'];
+$config['host'];
+$config['port'];
 ```
-<button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
-
-<script>
-const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
-
-jtd.addEvent(toggleDarkMode, 'click', function(){
-  if (jtd.getTheme() === 'dark') {
-    jtd.setTheme('light');
-    toggleDarkMode.textContent = 'Preview dark color scheme';
-  } else {
-    jtd.setTheme('dark');
-    toggleDarkMode.textContent = 'Return to the light side';
-  }
-});
-</script>
-
-See [Customization]({{ site.baseurl }}{% link docs/customization.md %}) for more information.
-
-## Google Analytics
-
-```yaml
-# Google Analytics Tracking (optional)
-# e.g, UA-1234567-89
-ga_tracking: UA-5555555-55
-ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true by default)
-```
-
-## Document collections
-
-By default, the navigation and search include normal [pages](https://jekyllrb.com/docs/pages/).
-Instead, you can also use [Jekyll collections](https://jekyllrb.com/docs/collections/) which group documents semantically together.
-
-For example, put all your documentation files in the `_docs` folder and create the `docs` collection:
-```yaml
-# Define Jekyll collections
-collections:
-  # Define a collection named "docs", its documents reside in the "_docs" directory
-  docs:
-    permalink: "/:collection/:path/"
-    output: true
-
-just_the_docs:
-  # Define which collections are used in just-the-docs
-  collections:
-    # Reference the "docs" collection
-    docs:
-      # Give the collection a name
-      name: Documentation
-      # Exclude the collection from the navigation
-      # Supports true or false (default)
-      nav_exclude: false
-      # Exclude the collection from the search
-      # Supports true or false (default)
-      search_exclude: false
-```
-
-You can reference multiple collections.
-This creates categories in the navigation with the configured names.
-```yaml
-collections:
-  docs:
-    permalink: "/:collection/:path/"
-    output: true
-  tutorials:
-    permalink: "/:collection/:path/"
-    output: true
-
-just_the_docs:
-  collections:
-    docs:
-      name: Documentation
-    tutorials:
-      name: Tutorials
-```
-
