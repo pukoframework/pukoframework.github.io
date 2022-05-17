@@ -8,7 +8,7 @@ nav_order: 2
 {: .no_toc }
 
 
-Just the Docs has some specific configuration parameters that can be defined in your Jekyll site's _config.yml file.
+Puko Framework has some specific configuration parameters that can be defined in your project config directory.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -20,14 +20,14 @@ Just the Docs has some specific configuration parameters that can be defined in 
 ---
 
 
-View this site's [_config.yml](https://github.com/pmarsceill/just-the-docs/tree/master/_config.yml) file as an example.
+View this site's [config](https://github.com/velliz/puko/tree/master/config) file as an example.
 
 
 ## Site logo
 
 ```yaml
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/just-the-docs.png"
+logo: "/assets/images/puko-material-100.png"
 ```
 
 ## Search
