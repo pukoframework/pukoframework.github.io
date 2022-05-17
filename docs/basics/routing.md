@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Routing
-nav_order: 8
+parent: Basics
+nav_order: 1
 ---
 
 # Search

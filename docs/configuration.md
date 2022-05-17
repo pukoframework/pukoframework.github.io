@@ -58,19 +58,19 @@ By default, Puko Framework utilize memcached as cache driver. You can configure 
 ];
 ```
 
-> cache implementation coming soon
+<small>cache implementation coming soon</small>
 
 - logs
 
 Puko utilize logs as a custom hook with build in **Slack Incoming WebHooks** for error reporting, by default set to false. If you have slack accounts, you can setup a **Incoming WebHook** URL and paste it in Slack url. Then in the Puko Framework Slack section, set the `active` state to `true`.
 
-> custom logs is coming soon
+<small>custom logs is coming soon</small>
 
 ## database.php
 
 Database configurations located at `config/database.php` folder. You can specify more than one connection because puko uses schema name for each connection string. Puko also scaffolds database configuration process with `pukoconsole` tools included as _dev-dependency_.
 
-> as version 1.1.6 puko only supports MySQL and MSSQL database engine
+<small> as version 1.1.6 puko only supports MySQL and MSSQL database engine</small>
 
 ```bash
 php puko setup db
@@ -91,7 +91,7 @@ Items asked:
 |Password|Password databases|******|
 |Driver|Database Driver|mysql|
 
-> At the end wizard is asking for another connection you can answer with y/n
+<small>At the end wizard is asking for another connection you can answer with y/n</small>
 
 You can refer to database section for detailed information.
 
@@ -99,7 +99,7 @@ You can refer to database section for detailed information.
 
 Encryption required to secure many aspects in our applications. Puko framework mostly using this to secure user authentication data in several forms. Sessions, Cookies, and Bearer. Puko can scaffolds this process with `pukoconsole` tools included as _dev-dependency_.
 
-> Puko using AES-256-CBC as encryption algorithms
+<small>Puko using AES-256-CBC as encryption algorithms</small>
 
 To start configure Encryption, you can type in _console/terminal/powershell_:
 
