@@ -1,20 +1,17 @@
 ---
 layout: default
-title: Navigation Structure
-nav_order: 3
+title: Project Structure
+nav_order: 4
 ---
 
-# Navigation Structure
+# Project Structure
 {: .no_toc }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+## Table of contents
+{: .no_toc .text-delta }
+
 1. TOC
 {:toc}
-</details>
 
 ---
 
