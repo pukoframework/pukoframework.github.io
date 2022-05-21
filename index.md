@@ -12,6 +12,10 @@ permalink: /
 Welcome to Puko Framewok, fullstack PHP framework for Rapid Application Development.
 {: .fs-6 .fw-300 }
 
+[![Build Status](https://travis-ci.org/Velliz/pukoframework.svg?branch=master)](https://travis-ci.org/Velliz/pukoframework)
+[![Total Downloads](https://poser.pugx.org/puko/framework/downloads)](https://packagist.org/packages/puko/framework)
+[![Latest Stable Version](https://poser.pugx.org/puko/framework/v/stable)](https://packagist.org/packages/puko/framework)
+
 [Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [View it on GitHub](https://github.com/Velliz/puko){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
