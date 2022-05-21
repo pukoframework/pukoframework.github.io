@@ -5,6 +5,17 @@ parent: Production
 nav_order: 1
 ---
 
+# Server
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
 ## Apache
 
 You can set *clean url* with apache with the following `.htaccess` configuration:

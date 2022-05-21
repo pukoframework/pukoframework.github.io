@@ -1,7 +1,19 @@
 ---
-title: Multi Language
-category: Plugins
-order: 2
+layout: default
+title: Internationalization
+parent: Utilities
+nav_order: 4
+---
+
+# Internationalization
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 ---
 
 Challenge faced when a website or api service dealing with multiple language is to maintain the overall performance.

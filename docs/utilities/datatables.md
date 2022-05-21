@@ -1,7 +1,19 @@
 ---
-title: DataTable Class
-category: Plugins
-order: 4
+layout: default
+title: DataTables
+parent: Utilities
+nav_order: 2
+---
+
+# DataTables
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 ---
 
 **PHP Guide**
