@@ -2,7 +2,7 @@
 layout: default
 title: System Class
 parent: Basics
-nav_order: 10
+nav_order: 9
 ---
 
 # System Class
@@ -36,7 +36,7 @@ You can customize the look of error page at `assets/html/id/error/maintenance.ht
 This page displayed when not-exists routes opened.
 You can customize the look of not found page at `assets/html/id/error/notfound.html` and the controller file `controller/error.php at function notfound()`
 
-> These page displayed if the error controller class `error.php` set to extend the View middleware.
+<small>These page displayed if the error controller class `error.php` set to extend the View middleware.</small>
 
 ---
 
@@ -72,4 +72,4 @@ This error occurs when an `#Permission \pukoframework\auth\Bearer@\plugins\auth\
 You can customize the look of not authenticated page at `system/permission.html`.
 No controller file available for this.
 
-> All html template only available when you extend the controller class to View middleware.
+<small>All html template only available when you extend the controller class to View middleware.</small>

@@ -41,7 +41,7 @@ assets
             template.html
 ```
 
-> you can add another language code by yourself like `cn`, `kr`, `jp` and so on.
+<small>you can add another language code by yourself like `cn`, `kr`, `jp` and so on.</small>
 
 ---
 
@@ -52,7 +52,7 @@ For example:
 throw new Exception($this->say('NOT_FOUND'));
 ```
 
-> say called with `$this` because the functions inherited from controller.
+<small>say called with `$this` because the functions inherited from controller.</small>
 
 The 'NOT_FOUND' key you noticed is stored in json file in `assets/master/id.master.json` by default.
 You can also add new json file with language code as you wish `en.master.json`, `cn.master.json' so on.

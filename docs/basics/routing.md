@@ -40,7 +40,7 @@ Items asked:
 |Function name|Function name|pages|
 |Accept?|HTTP verb GET,POST,PUT,PATCH,DELETE multiple by commas|get,post|
 
-> You must using (\\) _backslash_ for separating controller.
+<small>You must using (\\) _backslash_ for separating controller.</small>
 
 After completed, puko is updating and auto-generated these files:
 
@@ -62,7 +62,7 @@ You can also see all registered routes with this command:
 php puko routes list
 ```
 
-> All generated routes stored in `config/routes.php`
+<small>All generated routes stored in `config/routes.php`</small>
 
 If you want to update or modify the HTTP verb accepted from the Routing url registered, 
 you can update it with command:

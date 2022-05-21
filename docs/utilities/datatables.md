@@ -1,11 +1,11 @@
 ---
 layout: default
-title: DataTables
+title: Data Tables
 parent: Utilities
 nav_order: 2
 ---
 
-# DataTables
+# Data Tables
 {: .no_toc }
 
 ## Table of contents
@@ -70,7 +70,7 @@ This is example for pte import syntax:
 {!js(<script src="assets/js/dataTables.bootstrap.min.js"></script>)}
 ```
 
-> Attention: it is recommended to use DataTables version 1.10 or later.
+<small>Attention: it is recommended to use DataTables version 1.10 or later.</small>
 
 Make sure you also have forwarded the file to the master template.
 Usually, in the master template there will be the following input tags.
@@ -159,4 +159,4 @@ let table = $('#example').DataTable({
 });
 ```
 
-> Note: the number of *orderable* in *columns* must be the same as *SetColumnSpec* in your PHP code.
+<small>Note: the number of *orderable* in *columns* must be the same as *SetColumnSpec* in your PHP code.</small>

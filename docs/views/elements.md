@@ -36,7 +36,7 @@ php puko element add <element_name>
 
 You can change <element_name> name it freely according to your wishes.
 
-> Attention: naming elements must not use spaces or numbers in front of them. Recomends to include [a-z_A-Z] character only.
+<small>Attention: naming elements must not use spaces or numbers in front of them. Recomends to include [a-z_A-Z] character only.</small>
 
 After an element is created or downloaded, it will be saved in the directory like the structure shown below.
 

@@ -72,4 +72,4 @@ Then run your script from cli/powershell/terminal:
 php cli message/forgot/password/subscribe <arguments>
 ```
 
-> For now puko framework allow only 1 argument
+<small>For now puko framework allow only 1 argument</small>

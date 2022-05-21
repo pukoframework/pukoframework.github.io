@@ -89,7 +89,7 @@ class bibit_pohon extends Model
 }
 ```
 
-> Attention: you don't need to create this class because it is automatically generated in the scaffolding `php puko setup db`
+<small>Attention: you don't need to create this class because it is automatically generated in the scaffolding `php puko setup db`</small>
 
 The first part to pay attention to is the class declaration:
 

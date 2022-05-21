@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Framework
-parent: Basics
-nav_order: 9
+parent: Utilities
+nav_order: 6
 ---
 
 # Framework

@@ -56,7 +56,7 @@ $db['dashboard'] = [
 ];
 ```
 
-> Keep in mind: Schema Name must unique. You can add another connection as you needs.
+<small>Keep in mind: Schema Name must unique. You can add another connection as you needs.</small>
 
 ### CRUD operations for non `primary` connections.
 
@@ -68,7 +68,7 @@ $object = new models(null, 'dashboard');
 $object->save();
 ```
 
-> 'dashboard' is the schema name configured from `config/database.php`
+<small>'dashboard' is the schema name configured from `config/database.php`</small>
 
 * Update
 

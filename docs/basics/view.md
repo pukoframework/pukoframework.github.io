@@ -20,8 +20,8 @@ View in puko is divided into master layout and hierarchical content generated au
 console command `php puko routes view add ...`. The most important thing you should know in first is: '_View part in puko don't have logic_'.
 Role model of view in puko is enough for render data, also render data in list with loop tags.
 
-> As the view layer in HMVC should do their job to **Presenting Data**. 
-> You can utilize the full potential of JavaScript if want to build rich animation or logic in view. 
+<small>As the view layer in HMVC should do their job to **Presenting Data**. 
+You can utilize the full potential of JavaScript if want to build rich animation or logic in view. </small>
 
 As *default* when *Puko* installed with composer you have this `master.html` file as starting point of view:
 
@@ -50,7 +50,7 @@ As *default* when *Puko* installed with composer you have this `master.html` fil
 </html>
 ```
 
-> Puko utilize pure html file for View layer. So the file cannot disrupted with php syntax when the file grow bigger.
+<small>Puko utilize pure html file for View layer. So the file cannot disrupted with php syntax when the file grow bigger.</small>
 
 As you can see Puko have a template syntax tag like `{!title}` `{CONTENT}` `{!part()}`. This called PTE tag.
 If you want to know more about the PTE tag, you can see the official project and documentation [here](https://github.com/Velliz/pte). 
@@ -129,4 +129,4 @@ class user extends View {
 }
 ```
 
-> Note: if the **#Master master-admin.html** command not declared. Puko will automatically reffer the default **master.html**
+<small>Note: if the **#Master master-admin.html** command not declared. Puko will automatically reffer the default **master.html**</small>

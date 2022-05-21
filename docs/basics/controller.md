@@ -61,7 +61,7 @@ So you don't need to worry about server limitation parameter like timeouts.
 
 > TODOC
 
-> You can also manually create the controller :)
+<small>You can also manually create the controller :)</small>
 
 ---
 
@@ -115,4 +115,4 @@ public function member() {
 }
 ```
 
-> Notes: you can see *docs tag* further in **Puko Docs Command** sections.
+<small>Notes: you can see *docs tag* further in **Puko Docs Command** sections.</small>

@@ -39,7 +39,7 @@ Items asked:
 |Username|User databases|root|
 |Password|Paassword databases|******|
 
-> At the end wizard is asking for another connection you can answer with y/n
+<small>At the end wizard is asking for another connection you can answer with y/n</small>
 
 What this process means?
 
@@ -47,7 +47,7 @@ Puko will save the connection setting in `config/database.php` file
 and generate corresponding PHP class model as **data object wiring** with your database model.
 Those files generated and saved in `plugins/model/<schema>` directory.
 
-> That file should not be modified
+<small>That file should not be modified</small>
 
 So, why we need **data object wiring**?
 
@@ -66,7 +66,7 @@ This is example of what inside table `inventory`:
 |1|Chair|2020-08-15|Minimalist chair made from pine woods|
 |2|Laptop|2020-08-16|Gaming notebooks with core i7 and RTX2070 Max-Q|
 
-> Alert: tables name must only contain letters without special character or space due to limitations of php class name rules.
+<small>Alert: tables name must only contain letters without special character or space due to limitations of php class name rules.</small>
 
 Create or save operations:
 
@@ -116,7 +116,7 @@ $all = plugins\model\primary\inventory::GetAll();
 
 As you can see. Basic CRUD operations is simple and don't need to use any manual typed SQL query.
 
-> The DataBase Interface (DBI) in puko framework for now only support MySQL and MariaDB. 
+<small>The DataBase Interface (DBI) in puko framework for now only support MySQL and MariaDB. </small>
 
 But then how about run the stored procedure or executing complex query like join operations?
 

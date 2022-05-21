@@ -81,7 +81,7 @@ public function Login($username, $password)
 }
 ```
 
-> login must return a PukoAuth class object.
+<small>login must return a PukoAuth class object.</small>
 
 Then, you can implement the login code on *controller* with the syntax like this example:
 

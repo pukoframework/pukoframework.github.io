@@ -2,7 +2,7 @@
 layout: default
 title: Docs Command
 parent: Basics
-nav_order: 11
+nav_order: 10
 ---
 
 # Docs Command

@@ -44,6 +44,6 @@ public function profile()
 Permission defined as `MANAGER`. 
 So only user with this permission assigned can access the functions.
 
-> You need to write full path with PSR-4 directory structure to your plugin auth class. 
-> `\pukoframework\auth\Bearer@\plugins\auth\UserAuth`
+<small>You need to write full path with PSR-4 directory structure to your plugin auth class.
+`\pukoframework\auth\Bearer@\plugins\auth\UserAuth`</small>
 

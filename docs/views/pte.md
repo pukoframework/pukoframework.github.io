@@ -34,7 +34,7 @@ All tags that can be used are summarized in the following table.
 | {!part(js)} | move **JavaScript** tag from content html to tag location somewhere in master |
 | {x.html} | tag for load segment file |
 
-> Attention: **Elements** can be seen in the **Elements** document section.
+<small>Attention: **Elements** can be seen in the **Elements** document section.</small>
 
 ```html
 <span>{!x}</span>
@@ -126,7 +126,7 @@ You can write the use of assets on content like the following example.
 {!js(<script src="assets/js/dataTables.bootstrap.min.js"></script>)}
 ```
 
-> if you want to comment the code use html comment tag like this: {!js(<!--<script src="...bootstrap.min.js"></script>-->)}
+<small>if you want to comment the code use html comment tag like this: {!js(<!--<script src="...bootstrap.min.js"></script>-->)}</small>
 
 Make sure you also have forwarded the file to the master template.
 Usually, in the master template there by default will have the following input tags.
