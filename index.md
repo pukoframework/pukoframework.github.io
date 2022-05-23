@@ -24,7 +24,7 @@ Welcome to Puko Framewok, fullstack PHP framework for Rapid Application Developm
 
 ### Dependencies
 
-Like another PHP framework out there, the standard PHP extension required for running Puko Framework is Composer, `php-json`, `php-pdo`, `php-pdo-mysql`, `php-gd` and PHP version required was `7.0` or newer. You may also required another extension from additionally thrid party library installed via composer. You can also running this framework with bundled tools like [Laragon](https://laragon.org/download/index.html) or [XAMPP](https://www.apachefriends.org/download.html).
+Like another PHP framework out there, the standard PHP extension required for running Puko Framework is `Composer`, `php-json`, `php-pdo`, `php-pdo-mysql`, `php-gd` and PHP version required was `7.0` or newer. You may also required another extension from additionally thrid party library installed via composer. You can also running this framework with bundled tools like [Laragon](https://laragon.org/download/index.html) or [XAMPP](https://www.apachefriends.org/download.html).
 
 ### Quick start
 
@@ -44,6 +44,8 @@ php puko serve 4000
 <small>You can also run the code from Apache/Nginx/Docker.</small>
 
 If you're planning to make a Docker Container Image, you can review the default `Dockerfile` configuration and build the image with `docker build .` 
+
+<small>You can also follow the +-15 minutes quick start guide here to create web applications with Puko Framework.</small>
 
 ### Configure Environment
 

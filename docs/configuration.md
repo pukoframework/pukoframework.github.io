@@ -7,10 +7,6 @@ nav_order: 3
 # Configuration
 {: .no_toc }
 
-
-Puko Framework has some specific configuration parameters that can be defined in your project config directory.
-{: .fs-6 .fw-300 }
-
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -113,7 +109,7 @@ Routes located in `config/routes.php` and holds all routing information. This fi
 
 See [Routing]({{ site.baseurl }}{% link docs/basics/routing.md %}) for more information.
 
-## Custom <file>.php
+## `custom`.php
 
 Puko framework can also create custom config file. for example if you want to add RabbitMQ message queue you can create new `config/rabbitmq.php` file
 
