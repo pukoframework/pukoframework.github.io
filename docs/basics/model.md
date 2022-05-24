@@ -2,7 +2,7 @@
 layout: default
 title: Model
 parent: Basics
-nav_order: 3
+nav_order: 5
 ---
 
 # Model

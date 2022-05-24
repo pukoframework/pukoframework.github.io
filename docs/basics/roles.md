@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Roles
+title: Roles and Permissions
 parent: Basics
 nav_order: 7
 ---
 
-# Roles
+# Roles and Permissions
 {: .no_toc }
 
 ## Table of contents

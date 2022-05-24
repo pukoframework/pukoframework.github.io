@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Data Tables
+title: jQuery DataTables
 parent: Utilities
 nav_order: 2
 ---
 
-# Data Tables
+# jQuery DataTables
 {: .no_toc }
 
 ## Table of contents

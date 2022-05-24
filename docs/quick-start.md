@@ -20,7 +20,7 @@ Greetings! So thrilled to see you here!
 "From nothing to master." Everything is dark at first place. To escape from the dark, we need a compehensive manual we can rely. 
 This section will guide you to +-15 minutes tutorial: "Creating simple TODO web applications" using Puko Framework. 
 
-<small>This tutorial need a PHP version 7.0, composer and MySQL installed on your machine.</small>
+<small>This tutorial need a PHP version >= 7.0, composer and MySQL installed on your machine.</small>
 
 ## Prerequisites
 
@@ -53,4 +53,4 @@ On Progress.
 ---
 
 Hope this section will put a picture first about what Puko Frameowk is, the mechanism, lifecycles, strength, limitations and see the light. 
-Hope **Puko Framework** is a match for your upcomming projects 😊.
+Hope **Puko Framework** is a match for your upcomming projects 😊

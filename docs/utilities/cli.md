@@ -1,11 +1,11 @@
 ---
 layout: default
-title: CLI
+title: Puko CLI
 parent: Utilities
 nav_order: 1
 ---
 
-# CLI
+# Puko CLI
 {: .no_toc }
 
 ## Table of contents

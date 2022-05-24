@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Basic CRUD
+title: Data Object
 parent: Databases
 nav_order: 1
 ---
 
-# Basic CRUD
+# Data Object
 {: .no_toc }
 
 ## Table of contents

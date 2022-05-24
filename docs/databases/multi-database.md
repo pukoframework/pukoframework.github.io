@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Multi Databases
+title: Multi Database Connection
 parent: Databases
 nav_order: 3
 ---
 
-# Multi Databases
+# Multi Database Connection
 {: .no_toc }
 
 ## Table of contents
