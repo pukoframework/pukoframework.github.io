@@ -120,3 +120,29 @@ So what's so interesting about this method?
 * You can do CRUD processing without writing SQL queries.
 * Create code Completion-able database fields in PHP code.
 * Produces a clean and easy syntax.
+
+Transactional
+
+Example use of transactional features described:
+
+```php
+$v = new vendors();
+$v->created = $this->GetServerDateTime();
+$v->cuid = 2;
+
+$v->vendors = "Didit Velliz";
+$v->phone = "0977789123";
+$v->city = "New York";
+$v->address = "Testing Street";
+
+//transaction blocks
+$transaction = DBI::Transactional('primary', function($dbi) use ($v) {
+    //save, delete or update process
+    $v->save($dbi);
+
+    //don't forget to return true or false as commit flag for transaction.
+    return true;
+});
+```
+
+The transaction object will evaluated as true or false to determinate is the transactional process sucess for all or failure for all.
