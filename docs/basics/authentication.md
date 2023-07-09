@@ -16,22 +16,21 @@ nav_order: 6
 
 ---
 
-First step to set up an *Authentication* features in Puko Framework is typing this command in console/terminal: 
+The first step to set up the Authentication feature in the Puko Framework is to type the following command in the console/terminal:
 
 ```text
 php puko setup auth <auth_name>
 ```
 
-You can type any name related to the entity. ex: `StudentAuth`, `GuestAuth` and so on. 
-You can have more than one auth features to.
+You can choose any name related to the entity, for example, **StudentAuth** or **GuestAuth**. You can have more than one authentication feature.
 
-For example the command should look like this:
+For example, the command should look like this:
 
 ```text
 php puko setup auth StudentAuth
 ```
 
-After the command executed *file class* will auto-generated and placed in _plugins/auth_ directory.
+After executing the command, a file class will be automatically generated and placed in the _plugins/auth_ directory:
 
 ```text
 - plugins/
@@ -39,7 +38,7 @@ After the command executed *file class* will auto-generated and placed in _plugi
     - StudentAuth.php
 ```
 
-If you open the *file*, you can see bellow empty method:
+If you open the _file_, you will see the following empty methods:
 
 ```php
 public function Login($username, $password)
@@ -58,14 +57,13 @@ public function GetLoginData($id)
 }
 ```
 
-That method supposed to be filled with your own custom Authentication implementation.
+These methods are meant to be filled with your own custom authentication implementation.
 
 ---
 
 **Login($username, $password)**
 
-For login, you can validate your username and password received from function param 
-and validate trough models or CURL request.
+For the login function, you can validate the username and password received from the function parameters and validate them through models or CURL requests.
 
 ```php
 public function Login($username, $password)
@@ -81,26 +79,23 @@ public function Login($username, $password)
 }
 ```
 
-<small>login must return a PukoAuth class object.</small>
+<small>The login function must return a **PukoAuth** class object.</small>
 
-Then, you can implement the login code on *controller* with the syntax like this example:
+To implement the login code in the controller, use the following syntax as an example:
 
 ```php
 $login = Session::Get(StudentAuth::Instance())->Login($username, $password);
 ```
 
-**StudentAuth::Instance()** is the object build automatic by puko to auto-wire the login process.
+**StudentAuth::Instance()** is an object built automatically by Puko to handle the login process.
 
-For `Session` and `Cookies`. If login process success. 
-Then the **$login** variable assigned will have `true` value and `false` if the login process failed.
+For **Session** and **Cookies**, if the login process is successful, the **$login** variable will be assigned a value of **true**, and **false** if the login process fails.
 
-For `Bearer`. If the login process success.
-Then the **$login** variable assigned will hold the string encrypted data.
-If fails, **$login** variable will have *false*.
+For **Bearer**, if the login process is successful, the **$login** variable will hold the encrypted string data. If it fails, the **$login** variable will be _false_.
 
 **Logout()**
 
-This is logout callbacks. You can write any code to clean up the logout process. 
+This is the logout callback. You can write any code to clean up the logout process.
 
 ```php
 public function Logout()
@@ -112,11 +107,10 @@ public function Logout()
 
 **GetLoginData($id)**
 
-To validate an Authentication, you must decode back the encryption string generated on the login process.
-So to simply that process, puko utilized an GetLoginData as callback function 
-after decoding string information that hold 2 parameters. 
-The first is `$secure` that contain all of `$dataToSecure` supplied in login process. 
-Same to second `$permission` param, will contain all permission code supplied in login process.
+To validate an authentication, you must decode the encryption string generated during the login process. 
+To simplify that process, Puko uses the GetLoginData callback function after decoding the string information, which contains two parameters. 
+The first parameter, **$secure**, contains all the **$dataToSecure** supplied during the login process. 
+Similarly, the second parameter, **$permission**, will contain all the permission codes supplied during the login process.
  
 ```php
 public function GetLoginData($secure, $permission)
@@ -130,8 +124,8 @@ public function GetLoginData($secure, $permission)
 
 ---
 
-If you want to protect controller function accessed from not-authenticated user. 
-You can seal-it with the auth doc command like below.
+If you want to protect a controller function from being accessed by an unauthenticated user, 
+you can use the following authentication documentation command:
 
 ```php
 /**
