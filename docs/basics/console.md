@@ -16,7 +16,6 @@ nav_order: 8
 
 ---
 
-
 Sometimes, when coding, we don't always rely on web servers like **Apache** or **Nginx**. 
 There may be a need to execute code outside the web server world. 
 To meet these requirements, Puko comes with a feature called **Console**. 

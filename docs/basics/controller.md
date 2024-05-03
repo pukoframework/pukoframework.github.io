@@ -41,7 +41,11 @@ Because puko adopting HMVC pattern, you always have a HTML file with same direct
 and wired automatically in the _return_ statement in the end of controller function.
 This is why `pukoconsole` is always bundling generated html file each view type of routes spawned.
 
-> TODOC
+Try it:
+
+```bash
+php puko routes view add "flavoured/views"
+```
 
 ## Service flavoured Controller
 
@@ -49,8 +53,10 @@ If main use case is API or backend applications, you can use `service` controlle
 By default, it will convert returned data at the end of function into JSON representational response data.
 Also, you need `ext-json` enabled in PHP modules to utilize this functionality.
 
-> TODOC
-
+```bash
+php puko routes service add "flavoured/apiservices"
+```
+`
 ## Console flavoured Controller
 
 Oftentimes we need a PHP script to doing something in background.
@@ -58,9 +64,13 @@ you can use `console` controller in puko fraamework.
 Because it can execute commands separately from web server. 
 So you don't need to worry about server limitation parameter like timeouts.
 
-> TODOC
-
+```bash
+php puko routes service add "flavoured/consoleservices"
+```
+`
 ## WebSocket flavoured Controller
+
+> Coming soon in puko framework version 2.0
 
 <small>You can also manually create the controller :)</small>
 

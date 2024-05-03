@@ -16,7 +16,8 @@ nav_order: 1
 
 ---
 
-Puko framework have different kind of routing clause "as-is" controller functionality, we call it sorted from most ussage in order: `view`, `service`, and `console`. Puko framework can scaffolds Routing process with `pukoconsole` tools included as _dev-dependency_ to speed up your web app develpment process.
+Puko framework have different kind of routing clause "as-is" controller functionality, we call it sorted from most ussage in order: `view`, `service`, and `console`. 
+Puko framework can scaffolds Routing process with `pukoconsole` tools included as _dev-dependency_ to speed up your web app develpment process.
 
 ## Create New Routing
 

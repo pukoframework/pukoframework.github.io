@@ -72,4 +72,4 @@ Place %s in the json file to retreive the custom value:
 }
 ```
 
-Now language resource can translated and centralized.
+Now language resources can be translated and centralized.

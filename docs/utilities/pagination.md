@@ -16,7 +16,6 @@ nav_order: 5
 
 ---
 
-
 Pagination can be used with search.
 The mandatory field you must send is the query string:
 

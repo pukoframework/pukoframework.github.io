@@ -16,7 +16,6 @@ nav_order: 4
 
 ---
 
-
 Use service to create web-service. Because puko directly return the data in json format.
 You can instantly scaffolds your service with `php puko routes serice add ...`.
 Querying data and return it at the end of controller functions. 

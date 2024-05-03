@@ -22,27 +22,27 @@ This feature called Object Data.
 In order to see how this Data Object works, you can look at the following syntax example:
 
 ```php
-$bibit = new bibit_pohon();
-$bibit->harga = 35000;
-$bibit->jenis_pohon = "Mangga Apel";
-$bibit->jumlah = 5;
-$bibit->ket = "Dari cangkokan super";
+$tree_seeds = new tree_seeds();
+$tree_seeds->price = 35000;
+$tree_seeds->tree_type = "Manggo";
+$tree_seeds->amount = 5;
+$tree_seeds->descriptions = "From seeds";
 
-$bibit->save();
+$tree_seeds->save();
 ```
 
 ```php
-$bibit->modify();
+$tree_seeds->modify();
 ```
 
 ```php
-$bibit->remove();
+$tree_seeds->remove();
 ```
 
 From the code snippet above we can see that:
-* **bibit_pohon** is the intantiation of a class.
-* **bibit_pohon** have properties in the form of _harga, jenis_pohon, jumlah_ and _ket_.
-* **bibit_pohon** perform the data storage process by calling the `save()` function.
+* **tree_seeds** is the intantiation of a class.
+* **tree_seeds** have properties in the form of _price, tree_type, amount_ and _descriptions_.
+* **tree_seeds** perform the data storage process by calling the `save()` function.
 
 If you are curious about what the tree seed class itself looks like, then here's the code:
 
@@ -55,10 +55,10 @@ use pukoframework\pda\DBI;
 use pukoframework\pda\Model;
 
 /**
- * #Table bibit_pohon
+ * #Table tree_seeds
  * #PrimaryKey id
  */
-class bibit_pohon extends Model
+class tree_seeds extends Model
 {
     
     /**
@@ -67,24 +67,24 @@ class bibit_pohon extends Model
     var $id = null;
 
     /**
-     * #Column jenis_pohon varchar(45)
+     * #Column tree_type varchar(45)
      */
-    var $jenis_pohon = null;
+    var $tree_type = null;
 
     /**
-     * #Column jumlah int(5)
+     * #Column amount int(5)
      */
-    var $jumlah = null;
+    var $amount = null;
 
     /**
-     * #Column harga int(8)
+     * #Column price int(8)
      */
-    var $harga = null;
+    var $price = null;
 
     /**
-     * #Column ket varchar(225)
+     * #Column descriptions varchar(225)
      */
-    var $ket = null;
+    var $descriptions = null;
 
 }
 ```
@@ -95,14 +95,14 @@ The first part to pay attention to is the class declaration:
 
 ```php
 /**
- * #Table bibit_pohon
+ * #Table tree_seeds
  * #PrimaryKey id
  */
-class bibit_pohon extends Model
+class tree_seeds extends Model
 ```
 
-Where there is a `#Table bibit_pohon` and `#PrimaryKey id` which shows that the class connected to a table in the database
-with the name of the table **bibit_pohon** and have a primary key with the name of the column **id**. 
+Where there is a `#Table tree_seeds` and `#PrimaryKey id` which shows that the class connected to a table in the database
+with the name of the table **tree_seeds** and have a primary key with the name of the column **id**. 
 
 During the scaffolding process, the puko reads the data structure down to the column level.
 We can also pay attention to the properties that are formed in the class:
@@ -131,7 +131,7 @@ $v->created = $this->GetServerDateTime();
 $v->cuid = 2;
 
 $v->vendors = "Didit Velliz";
-$v->phone = "0977789123";
+$v->phone = "081389001110";
 $v->city = "New York";
 $v->address = "Testing Street";
 

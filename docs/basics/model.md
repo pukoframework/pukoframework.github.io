@@ -111,7 +111,7 @@ $inventory->remove();
 Get all data:
 
 ```php
-$all = plugins\model\primary\inventory::GetAll();
+$all = plugins\model\primary\inventoryContracts::GetAll();
 ```
 
 As you can see. Basic CRUD operations is simple and don't need to use any manual typed SQL query.
