@@ -16,64 +16,56 @@ nav_order: 2
 
 ---
 
-**PHP Guide**
+DataTables is the most popular jQuery plugin used for displaying data in tabular format. The Puko Framework provides libraries that simplify the integration of DataTables, particularly when implementing **Server-side Processing**.
 
-DataTable is the most popular jQuery plugin used to display data in table.
-Puko provides libs that can simplify the use of DataTable, especially when using
-Datatable Serverside / Server Processing. 
+### PHP Implementation Guide
 
-To get started, create an object from the DataTable class with the following syntax:
+To get started, create an instance of the `DataTables` class using the following syntax:
 
 ```php
 $table = new DataTables(DataTables::POST);
 ```
 
-Then define your columns, especially the column names that are *selected* from the database.
+Next, define your column specifications, specifically the column names as they appear in your database selection:
 
 ```php
-$table->SetColumnSpec(array(
+$table->SetColumnSpec([
     "name",
     "age",
     "address",
     "email"
-));
+]);
 ```
 
-After that, you must write a *sql* query to be processed later by the DataTable class.
+Provide the SQL query that will be processed by the DataTables class:
 
 ```php
 $table->SetQuery("SELECT * FROM students;");
 ```
 
-Then, you can display the data using the following syntax.
+Finally, return the processed data using the `GetDataTables` method. This method accepts an anonymous function (callback) allowing for data transformation before it is sent to the client.
 
 ```php
 return $table->GetDataTables(function ($result) {
-    foreach ($result as $key => $val) {
-        //you can perform modification data results here
+    foreach ($result as $key => &$val) {
+        // You can perform data modifications or transformations here
     }
     return $result;
 });
 ```
 
-Note that the **GetDataTables** function uses *callbacks* in the form of anonymous *functions*.
-This feature is useful if you want to perform data transformation before the result *select*
-shown.
+### JavaScript Implementation Guide
 
-**JavaScript Guide**
-
-Make sure you have the required DataTables js files and import them correctly into the html file.
-This is example for pte import syntax:
+Ensure that you have included the required DataTables JavaScript files in your HTML. Using Puko's PTE syntax:
 
 ```html
 {!js(<script src="assets/js/jquery.dataTables.min.js"></script>)}
 {!js(<script src="assets/js/dataTables.bootstrap.min.js"></script>)}
 ```
 
-<small>Attention: it is recommended to use DataTables version 1.10 or later.</small>
+<small>*Note: It is highly recommended to use DataTables version 1.10 or later.*</small>
 
-Make sure you also have forwarded the file to the master template.
-Usually, in the master template there will be the following input tags.
+Verify that your master template includes the necessary placeholders for dynamic assets:
 
 ```html
 <html>
@@ -88,7 +80,7 @@ Usually, in the master template there will be the following input tags.
 </html>
 ```
 
-Then, you can add JavaScript code instantiations of DataTables as shown below.
+Initialize the DataTable in your JavaScript code as shown below:
 
 ```javascript
 let table = $('#example').DataTable({
@@ -98,10 +90,10 @@ let table = $('#example').DataTable({
         responsive: true,
         url: $('base#api').attr('href') + "backend/api/endpoint",
         data: function (data) {
-
+            // Additional parameters to send to the server
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.error(errorThrown);
         },
         dataSrc: function (json) {
             if (json.exception !== undefined) {
@@ -146,17 +138,17 @@ let table = $('#example').DataTable({
             text: 'Custom Button',
             className: "btn-sm",
             action: function ( e, dt, node, config ) {
-
+                // Custom action logic
             }
         }
     ],
     initComplete: function (settings, json) {
-
+        // Callback after table initialization
     },
     rowCallback: function (row, data) {
-
+        // Callback for each row rendering
     },
 });
 ```
 
-<small>Note: the number of *orderable* in *columns* must be the same as *SetColumnSpec* in your PHP code.</small>
+<small>**Important:** The number and order of columns in your JavaScript initialization must match the `SetColumnSpec` definition in your PHP code.</small>

@@ -16,35 +16,39 @@ nav_order: 1
 
 ---
 
+The Puko Framework primarily utilizes `plugins\model` object instantiation to perform CRUD (Create, Read, Update, Delete) operations. This feature is known as **Data Objects**.
 
-Puko framework primarily makes use of `plugins\model` object instantiation to perform CRUD processing.
-This feature called Object Data. 
-In order to see how this Data Object works, you can look at the following syntax example:
+To understand how Data Objects work, consider the following syntax example:
 
 ```php
 $tree_seeds = new tree_seeds();
 $tree_seeds->price = 35000;
-$tree_seeds->tree_type = "Manggo";
+$tree_seeds->tree_type = "Mango";
 $tree_seeds->amount = 5;
-$tree_seeds->descriptions = "From seeds";
+$tree_seeds->descriptions = "Grown from seeds";
 
+// Save the data to the database
 $tree_seeds->save();
 ```
 
 ```php
+// Update existing data
 $tree_seeds->modify();
 ```
 
 ```php
+// Remove data from the database
 $tree_seeds->remove();
 ```
 
-From the code snippet above we can see that:
-* **tree_seeds** is the intantiation of a class.
-* **tree_seeds** have properties in the form of _price, tree_type, amount_ and _descriptions_.
-* **tree_seeds** perform the data storage process by calling the `save()` function.
+From the code snippet above, we can observe:
+*   **tree_seeds** is an instantiation of a class.
+*   The object has properties representing database columns, such as `price`, `tree_type`, `amount`, and `descriptions`.
+*   Data persistence is performed by calling the `save()`, `modify()`, or `remove()` methods.
 
-If you are curious about what the tree seed class itself looks like, then here's the code:
+### Data Object Structure
+
+Below is an example of what the `tree_seeds` class looks like internally:
 
 ```php
 <?php
@@ -60,7 +64,6 @@ use pukoframework\pda\Model;
  */
 class tree_seeds extends Model
 {
-    
     /**
      * #Column id int(10)
      */
@@ -85,13 +88,14 @@ class tree_seeds extends Model
      * #Column descriptions varchar(225)
      */
     var $descriptions = null;
-
 }
 ```
 
-<small>Attention: you don't need to create this class because it is automatically generated in the scaffolding `php puko setup db`</small>
+<small>**Note:** You do not need to manually create these classes; they are automatically generated during the scaffolding process via `php puko setup db`.</small>
 
-The first part to pay attention to is the class declaration:
+### How it Works
+
+The class declaration uses **Doc Tags** to map the class to a database table:
 
 ```php
 /**
@@ -101,11 +105,10 @@ The first part to pay attention to is the class declaration:
 class tree_seeds extends Model
 ```
 
-Where there is a `#Table tree_seeds` and `#PrimaryKey id` which shows that the class connected to a table in the database
-with the name of the table **tree_seeds** and have a primary key with the name of the column **id**. 
+*   `#Table tree_seeds`: Specifies the database table name.
+*   `#PrimaryKey id`: Identifies the primary key column.
 
-During the scaffolding process, the puko reads the data structure down to the column level.
-We can also pay attention to the properties that are formed in the class:
+Similarly, individual properties are mapped to table columns:
 
 ```php
 /**
@@ -114,16 +117,21 @@ We can also pay attention to the properties that are formed in the class:
 var $id = null;
 ```
 
-Using `#Column id int (10)` let the puko framework know that the variable associated with the same named column in the database.
-So what's so interesting about this method?
+*   `#Column id int(10)`: Links the class property to the corresponding database column.
 
-* You can do CRUD processing without writing SQL queries.
-* Create code Completion-able database fields in PHP code.
-* Produces a clean and easy syntax.
+### Key Benefits
 
-Transactional
+*   **No Manual SQL:** Perform CRUD operations without writing raw SQL queries.
+*   **Auto-Completion:** Benefit from IDE code completion for database fields.
+*   **Clean Syntax:** Produces readable and maintainable code.
 
-Example use of transactional features described:
+---
+
+### Transactions
+
+The Puko Framework supports transactional database operations to ensure data integrity.
+
+Example of using the transactional feature:
 
 ```php
 $v = new vendors();
@@ -135,14 +143,14 @@ $v->phone = "081389001110";
 $v->city = "New York";
 $v->address = "Testing Street";
 
-//transaction blocks
+// Transaction block
 $transaction = DBI::Transactional('primary', function($dbi) use ($v) {
-    //save, delete or update process
+    // Perform save, delete, or update operations
     $v->save($dbi);
 
-    //don't forget to return true or false as commit flag for transaction.
+    // Return true to commit the transaction, or false to roll back
     return true;
 });
 ```
 
-The transaction object will evaluated as true or false to determinate is the transactional process sucess for all or failure for all.
+The `$transaction` variable will evaluate to `true` or `false`, indicating whether the entire transactional process succeeded or failed.

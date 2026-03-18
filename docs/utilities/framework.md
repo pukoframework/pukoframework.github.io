@@ -16,84 +16,95 @@ nav_order: 6
 
 ---
 
-When writing code in controllers, you may sometimes wonder for a piece of code to generate random number, 
-server date time, get site base url, get the base directory of your project in server and so on.
+When writing controller logic, you may often need to generate random strings, retrieve the current server time, or access configuration constants. This section lists the available helper methods provided by the Puko Framework to address these needs. These methods are directly accessible within your **View**, **Service**, or **Console** controllers.
 
-This section of page will list all the available helper method to address this needs. 
-So you can use directly in controllers service/view/console.
+### Helper Methods
 
-* Get Server Date Time
+#### Get Server Date Time
+Retrieves the current server date and time in the format `Y-m-d H:i:s`.
 
-`$this->GetServerDateTime()`
+```php
+$dateTime = $this->GetServerDateTime();
+```
 
-You can use that helper function to capture server date time in 'Y-m-d H:i:s'
+#### Generate Random Token
+Generates a random alphanumeric string (A-Z, a-z, 0-9). By default, it produces a 6-character string.
 
-* Generate Random Token
+```php
+// Generates a 6-character token, e.g., "p4vRXo"
+$token = $this->GetRandomToken();
 
-`$this-GetRandomToken()`
+// Generates a custom-length token
+$longToken = $this->GetRandomToken(16);
+```
 
-Function will produce random six length string contains [0-9a-zA-Z] for example: `p4vRXo`.
-You can also customize the length smaller or greater than six with parameter.
+#### App Constant
+Retrieves a constant defined in the `const` section of your `config/app.php` file.
 
-`$this-GetRandomToken(16)`
+```php
+$apiEndpoint = $this->GetAppConstant('API_ENDPOINT');
+```
 
-The function above will produce sixteen length random string.
+#### Redirect
+Redirects the user to a specified routing path.
 
-* App Constant
+```php
+// Redirects to the 'login' route
+$this->RedirectTo('login', false);
+```
 
-`$this->GetAppConstant('KEY')`
+*   **First Parameter:** The destination route string.
+*   **Second Parameter:** A boolean. If `true`, the browser's history is replaced (similar to `location.replace`). If `false`, the redirection is treated as a standard link click.
 
-This function will get the constant defined in **config/app.php** in const section with name KEY.
+#### Say (Internationalization)
+Fetches a localized string from the JSON schema files located in `assets/master`.
 
-* Redirect
+```php
+$welcomeMessage = $this->say('WELCOME_GUEST');
+```
 
-`$this->RedirectTo('routing-path', false)`
+#### Base URL
+Retrieves the base URL of your application (e.g., `http://localhost:3000/`).
 
-The first param is the destination route param, and second param is boolean value when set to true
-will replace the prev page. when set to false the redirection treated equivalent as click link.
+```php
+$baseUrl = Framework::$factory->getBase();
+```
 
-* Say (Language)
+#### Root Path
+Retrieves the absolute server file system path to your project's root directory (e.g., `/var/www/html/puko`).
 
-`$this->say('LANGUAGE')`
+```php
+$rootPath = Framework::$factory->getRoot();
+```
 
-Will fetch the correct language from json schema placed in assets/master. 
-You can see further explanations in multiple language section.
+#### Get Environment
+Retrieves the current application environment setting (e.g., `DEVELOPMENT`, `STAGING`, or `PROD`).
 
-* Base URL
+```php
+$env = Framework::$factory->getEnvironment();
+```
 
-`Framework::$factory->getBase()`
+#### Get Start
+Retrieves the precise PHP execution start time (microtime).
 
-Retrieve web base url for example: http://localhost:3000/
-
-* Root Path
-
-`Framework::$factory->getRoot()`
-
-Retrieve server path of code for example: /var/www/html/puko
-
-* Get Environment
-
-`Framework::$factory->getEnvironment()`
-
-Retrieve environment info such as DEVELOPMENT or PROD.
-
-* Get Start (PHP execution time)
-
-`Framework::$factory->getStart()`
+```php
+$startTime = Framework::$factory->getStart();
+```
 
 ---
 
-Override function also available to change the default behavior of the controller life cycles.
-You can override 2 function:
+### Controller Lifecycle Overrides
+
+You can hook into the controller lifecycle by overriding the following methods:
 
 ```php
- public function BeforeInitialize()
+public function BeforeInitialize()
 {
-    // you can take action before real function executed here
+    // Executed before the primary controller function
 }
 
 public function AfterInitialize()
 {
-    // you can take action after real function executed here
+    // Executed after the primary controller function
 }
 ```

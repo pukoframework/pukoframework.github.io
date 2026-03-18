@@ -16,76 +16,78 @@ nav_order: 1
 
 ---
 
-Puko framework have different kind of routing clause "as-is" controller functionality, we call it sorted from most ussage in order: `view`, `service`, and `console`. 
-Puko framework can scaffolds Routing process with `pukoconsole` tools included as _dev-dependency_ to speed up your web app develpment process.
+The Puko Framework provides different types of routing clauses, categorized by the function of the controller. These are, in order of common usage: `view`, `service`, and `console`. Routing is managed via the `pukoconsole` tool, which is included as a development dependency to speed up web application development.
 
-## Create New Routing
+### Create New Routing
 
-To add new Routing, you can type in _console/terminal/powershell_:
+To add a new route, run the following command in your terminal:
 
-```text
+```bash
 php puko routes <controller_clause> add <rest_style_urls>
 ```
 
-<small>**rest_style_urls** can typed with `{?}` or `?` in PowerShell to identify it as dynamic PHP GET parameters.</small>
+<small>**URL Structure:** You can use `{?}` or `?` in your REST-style URLs to identify dynamic PHP `GET` parameters.</small>
 
-For example:
+Example:
 
-```text
+```bash
 php puko routes view add member/?/reports
 ```
 
-Items asked for the rest of process:
+#### Configuration Parameters
 
-|Items|Description|Examples|
-|---|---|---|
-|Controller name|File name. You can use \ to place the file in sub-directories|member\reports|
-|Function name|Function name|pages|
-|Accept?|HTTP verb GET,POST,PUT,PATCH,DELETE multiple by commas|get,post|
+| Parameter | Description | Example |
+| :--- | :--- | :--- |
+| **Controller Name** | The file name. Use a backslash (`\`) to place the file in a sub-directory. | `member\reports` |
+| **Function Name** | The name of the function to be called. | `pages` |
+| **Accept?** | The HTTP verbs allowed (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`). Multiple verbs can be comma-separated. | `get,post` |
 
-<small>Importand: While rotes using / _slash_, You must using \ _backslash_ for separating controller to prevent directory path error on diferent type of Operating Systems.</small>
+<small>**Important:** While routes use a forward slash (`/`), you must use a backslash (`\`) to separate controller names to prevent directory path errors across different operating systems.</small>
 
-## File generated after New Routing
+### Automatically Generated Files
 
-After completed, puko is updating and auto-generated these files:
+After successfully adding a route, the Puko Framework automatically updates and generates the following files:
 
 ```bash
 config/routes.php
 controller/member/reports.php
 ```
 
-If the routes clause was `view` puko will also update and auto-generated these files:
+If the routing clause was `view`, the following additional files will be generated:
 
 ```bash
 assets/html/en/member/reports/pages.html
 assets/html/id/member/reports/pages.html
 ```
 
-You can also see all registered routes with this command:
+To list all registered routes, use:
 
 ```bash
 php puko routes list
 ```
 
-<small>All generated routes stored in `config/routes.php`. So it's important to not manually edit those file to maintain Routing structure.</small>
+<small>**Important:** All generated routes are stored in `config/routes.php`. To maintain the routing structure, it is recommended not to edit this file manually.</small>
 
-## Update Routing
+---
 
-If you want to update or modify the HTTP verb accepted from the Routing url registered, 
-you can update it with command:
+### Update Routing
+
+To update or modify the HTTP verbs accepted by a registered route, use the update command:
 
 ```bash
 php puko routes view update member/?/reports
 ```
 
-Apply your revision when answering items asked.
+Apply your changes through the prompted wizard.
 
-## Delete Routing
+---
 
-Puko also can remove unused routes with remove command:
+### Delete Routing
+
+Unused routes can be removed with the `remove` command:
 
 ```bash
 php puko routes view remove member/{?}/reports
 ```
 
-<small>For security concerns puko not deleting the `.php` and `.html` file. You must review and remove it manually.</small>
+<small>**Security Note:** For security reasons, Puko does not delete the corresponding `.php` or `.html` files. You must review and remove them manually.</small>

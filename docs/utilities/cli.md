@@ -16,85 +16,92 @@ nav_order: 1
 
 ---
 
-Puko framework shipped out with CLI named **Puko Console** as dev-dependency helper tools when we developing website.
-You can see what Puko Console can do with help command:
+The Puko Framework is bundled with a Command Line Interface (CLI) named **Puko Console**. This tool serves as a development helper to streamline your workflow. You can view all available commands by running:
 
-```text
+```bash
 php puko help
 ```
 
-List of available command you can use:
+### Available Commands
 
 ```text
-setup    Installation
+setup    Installation & Configuration
          [db]
          [secure]
          [auth] [name]
          [controller] [view/service] [name]
          [model] [add/update/remove] [name] [schema]
          
-routes   Routing
+routes   Routing Management
          [view/service/console/list/error/lost] [add/update/delete/crud] [url]
 
-generate Auto generate service
+generate Automatic Schema Generation
          [db]
 
-serve    Start project on localhost
+serve    Start the development server on localhost
          [port]
          
-tests    Start unit testing (preview)
+tests    Run unit tests (Preview)
 
-element  Generate or download view element (beta)
+element  Generate or download view elements (Beta)
          <name> [add/download]
          
-cli      Execute code directly from console
+cli      Execute code directly from the console
          <router path>
          
-help     Show help menu
+help     Show the help menu
 
-version  Show console version
+version  Show the console version
 ```
 
-* Setup 
+### Command Breakdown
 
-If you want to see about `setup db` or `setup secure` you can refer to **Configuration** page.
+#### Setup
 
-Jump to another setup, there is `setup auth`. You can also refer to **Authentication** page.
+*   **setup db** & **setup secure**: Please refer to the [Configuration]({{ site.baseurl }}{% link docs/configuration.md %}) page for details.
+*   **setup auth**: Please refer to the [Authentication]({{ site.baseurl }}{% link docs/basics/authentication.md %}) page.
 
-* Routes
+#### Routes
 
-If you want to see information about `routes view`, you can refer to **View** page.
+*   **routes view**: Refer to the [View]({{ site.baseurl }}{% link docs/basics/view.md %}) documentation.
+*   **routes service**: Refer to the [Service]({{ site.baseurl }}{% link docs/basics/service.md %}) documentation.
 
-If you want to see information about `routes service`, you can refer to **Service** page.
+#### Generate
 
-* Generate
+The `php puko generate db` command creates database tables based on the model schemas defined in `plugins\model`.
 
-`php puko generate db` command will create the database based on model schema in `plugins\model`
+#### Serve
 
-* Serve
+You can run your Puko project without a standalone web server using the built-in development server:
 
-You can run *Puko* without using a web server. Use *command* below to run it directly:
-
-```text
-php puko serve [POST_NUMBER]
+```bash
+php puko serve [PORT_NUMBER]
 ```
 
-* Tests
+#### Tests
 
-> TODOCS
+The `php puko tests` command is used to run all unit tests in your project. It automatically scans the `tests/unit/` directory and executes test cases to verify your controller and model logic.
 
-* Element
+#### Element
 
-> TODOCS
+The `php puko element` command allows you to manage modular view components. You can create new elements locally or download them from the official Puko elements repository.
 
-* Cli
+Example usage:
+```bash
+php puko element download adminlte_description
+php puko element add user_profile
+```
 
-`php puko cli [ROUTE_URL]` will execute controllers directly from php.
+For more details, see the [Elements]({{ site.baseurl }}{% link docs/views/elements.md %}) section.
 
-* Help
+#### CLI
 
-Show all available commands.
+The `php puko cli [ROUTE_URL]` command allows you to execute controllers directly from the command line, which is useful for background tasks and automation.
 
-* Version
+#### Help
 
-Most simple command is check the cli version: `php puko version`
+Displays the full list of available commands and their usage.
+
+#### Version
+
+Displays the current version of the Puko Console: `php puko version`.

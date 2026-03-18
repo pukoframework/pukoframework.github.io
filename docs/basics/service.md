@@ -16,24 +16,22 @@ nav_order: 4
 
 ---
 
-Use service to create web-service. Because puko directly return the data in json format.
-You can instantly scaffolds your service with `php puko routes serice add ...`.
-Querying data and return it at the end of controller functions. 
-The noticeable thing you can find is in controller at the extends section.
+Use the `Service` controller to create web services. Puko directly returns the data in JSON format, allowing you to instantly scaffold your service using the `php puko routes service add` command. Query the data and return it at the end of your controller function.
+
+The key difference is in the class extension:
 
 ```php
 class students extends Service {}
 ```
 
-You're right! The controller file is simply extends `Service` to create web-service instead `View` that processing html file.
+A `Service` controller extends the `Service` class, rather than the `View` class used for processing HTML files.
 
-For example, if we have the controller showed bellow:
+### Service Controller Example
 
 ```php
 public function students() {
-
-    //app logic in here
-    //database operation maybe in here to
+    // Application logic here
+    // Database operations can be performed here too
 
     return [
         'Identification' => 'ID120027103',
@@ -46,13 +44,13 @@ public function students() {
 }
 ```
 
-So the json representational of the data returned from controller is:
+The data returned from the controller will be represented as JSON:
 
 ```json
 {
     "Identification": "ID120027103",
     "Name": "Didit Velliz",
-    "Age": 16,
+    "Age": 26,
     "Skills": [
       "PHP",
       "MySQL"
@@ -60,16 +58,21 @@ So the json representational of the data returned from controller is:
 }
 ```
 
-Passing dynamic data retrieved from url parameter is also possible with `{?}` keywords when create new route.
+<small>**Dynamic Parameters:** Dynamic data retrieved from URL parameters is supported using the `{?}` keyword during route creation.</small>
 
 ---
 
-Service also support a CRUD package. So you can generate multiple endpoints with one commands.
-Puko console command to do this job: `php puko routes service crud [schema]/[table]`.
-Schema will refer from database configuration and its default to **primary**.
-For tables is refer from table name in the database.
+### Service CRUD Package
+
+The `Service` controller also supports generating multiple endpoints with a single command using the `CRUD` package. Use the following `pukoconsole` command:
+
+```bash
+php puko routes service crud [schema]/[table]
+```
+
+*   **Schema:** Refers to the database configuration (defaults to `primary`).
+*   **Table:** Refers to the table name in the database.
 
 Example: `php puko routes service crud primary/students`
 
-This command will generate a controller located at `controller/primary/students.php`
-with complete CRUD functions. Controller codes and Routes also automatically configured.
+This command generates a controller located at `controller/primary/students.php` with complete CRUD functions. Controller code and routes are automatically configured.

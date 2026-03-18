@@ -16,60 +16,48 @@ nav_order: 9
 
 ---
 
-### Global State
+### Global States
 
-* Error Display
+The Puko Framework provides built-in templates and controllers for managing various system-wide error states.
 
-Page to this template located at `assets/html/id/error/display.html` and the controller file `controller/error.php at function display()`
-and triggered because the http accept don't match with the verb opened from web browser.
-For example routes registered with verb *POST* and you access the routes with verb *GET*.
-This error will execute immediately.
+#### Error Display
 
-* Error Maintenance
+The template for this page is located at `assets/html/id/error/display.html`, and the corresponding controller function is `controller/error.php` at `display()`. This is triggered when the HTTP `ACCEPT` header does not match the verb opened from the web browser (e.g., if a route is registered with `POST` and accessed with `GET`).
 
-This page displayed if the index variable called `environment` switched to 'MAINTENANCE'.
-This will take down website and will response Under Maintenance info on the screen.
-You can customize the look of error page at `assets/html/id/error/maintenance.html` and the controller file `controller/error.php at function maintenance()`
+#### Error Maintenance
 
-* Error Not-Found
+This page is displayed when the `environment` index variable is set to `MAINTENANCE`. This takes the website offline and shows the "Under Maintenance" information on the screen. Customize the maintenance page at `assets/html/id/error/maintenance.html` and the controller file `controller/error.php` at `maintenance()`.
 
-This page displayed when not-exists routes opened.
-You can customize the look of not found page at `assets/html/id/error/notfound.html` and the controller file `controller/error.php at function notfound()`
+#### Error Not-Found
 
-<small>These page displayed if the error controller class `error.php` set to extend the View middleware.</small>
+This page is displayed when a non-existent route is accessed. Customize the "Not Found" page at `assets/html/id/error/notfound.html` and the controller file `controller/error.php` at `notfound()`.
+
+<small>*Note: These pages are displayed if the error controller class `error.php` extends the View middleware.*</small>
 
 ---
 
-### Function & Doc Command State
+### Function & Doc Command States
 
-* Not Authenticated
+The following error states are triggered by specific **Doc Tags** and system exceptions.
 
-Triggered when function issued with doc command: `#Auth bearer true` when user not authenticated, the error raised.
-You can customize the look of not authenticated page at `system/auth.html`.
-No controller file available for this.
+#### Not Authenticated
 
-* Under Construction
+Triggered when a function is called with the doc tag: `#Auth bearer true` and the user is not authenticated. Customize the "Not Authenticated" page at `system/auth.html`. (No controller file is available for this.)
 
-Triggered when function issued with doc command: `#UnderConstruction true` the error raised.
-You can customize the look of not authenticated page at `system/construction.html`.
-No controller file available for this.
+#### Under Construction
 
-* Error
+Triggered when a function is called with the doc tag: `#UnderConstruction true`. Customize the "Under Construction" page at `system/construction.html`. (No controller file is available for this.)
 
-This error occurs when an error inside controller function triggered, like not assigned variable being echoed. (*caused undefined variable error)
-You can customize the look of not authenticated page at `system/error.html`.
-No controller file available for this.
+#### General Error
 
-* Exception
+This error occurs when an internal error is triggered within a controller function, such as an undefined variable. Customize the error page at `system/error.html`. (No controller file is available for this.)
 
-This error occurs when an `throw new Exception()` executed.
-You can customize the look of not authenticated page at `system/exception.html`.
-No controller file available for this.
+#### Exception
 
-* Not Authorized for Permission
+This error occurs when an `Exception` is thrown. Customize the "Exception" page at `system/exception.html`. (No controller file is available for this.)
 
-This error occurs when an `#Permission \pukoframework\auth\Bearer@\plugins\auth\UserAuth permissions@MANAGER` executed.
-You can customize the look of not authenticated page at `system/permission.html`.
-No controller file available for this.
+#### Not Authorized for Permission
 
-<small>All html template only available when you extend the controller class to View middleware.</small>
+This error occurs when a user does not have the required permission defined by a `#Permission` tag. Customize the "Permission Denied" page at `system/permission.html`. (No controller file is available for this.)
+
+<small>*Note: All HTML templates are only available when the controller extends the View middleware.*</small>

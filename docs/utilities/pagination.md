@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Paginations
+title: Pagination
 parent: Utilities
 nav_order: 5
 ---
 
-# Paginations
+# Pagination
 {: .no_toc }
 
 ## Table of contents
@@ -16,31 +16,41 @@ nav_order: 5
 
 ---
 
-Pagination can be used with search.
-The mandatory field you must send is the query string:
+The Puko Framework provides a simple way to paginate large datasets, which can also be combined with search queries.
 
-* page
-* length
+### API Requirements
 
-for example: `http://localhost/api/test?page=1&length=10`
+When requesting paginated data, the client must include the following query string parameters:
 
-**PHP Guide**
+*   **page**: The current page number (starting from 1).
+*   **length**: The number of records to display per page.
+
+Example URL: `http://localhost/api/test?page=1&length=10`
+
+### PHP Implementation Guide
+
+To implement pagination in your controller, use the `Paginations` utility class:
 
 ```php
 $length = 10;
-$sql = "SELECT * FROM ...";
+$sql = "SELECT * FROM students WHERE status = 'active'";
 
 $paginate = new Paginations();
 $paginate->SetLength($length);
 $paginate->SetQuery($sql);
 
 return $paginate->GetDataPaginations(function ($result) {
-    foreach ($result as $key => $val) {}
+    // Optional: Perform data transformations for each record
+    foreach ($result as $key => &$val) {
+        // Your logic here
+    }
     return $result;
 });
 ```
 
-JSON Response
+### JSON Response Structure
+
+The `GetDataPaginations` method returns a standardized JSON object that is easy to consume on the frontend:
 
 ```json
 {
@@ -57,8 +67,22 @@ JSON Response
         }
     ],
     "totaldata": 15,
-    "data": []
+    "data": [
+        {
+            "id": 1,
+            "name": "Student Name"
+        }
+        // ... additional data
+    ]
 }
 ```
 
+#### Field Descriptions:
 
+*   **page**: The current page number.
+*   **totalpage**: The total number of available pages.
+*   **length**: The requested number of records per page.
+*   **displayed**: The actual number of records returned for the current page.
+*   **anchor**: A list of objects representing available page numbers (useful for building pagination UI).
+*   **totaldata**: The total number of records matching the query in the database.
+*   **data**: An array of objects containing the requested record data.

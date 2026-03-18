@@ -15,25 +15,26 @@ nav_order: 3
 {:toc}
 
 ---
-When database connection configured, You will notice it with schema labeled as `primary`. 
-Puko labeled it for primary database connection to use when your code invokes CRUD operations.
-You can connect to more than one database with different labels.
 
-For example invoke a setup db with another schema label:
+By default, the Puko Framework uses the `primary` schema label for your main database connection. However, you can easily connect to multiple databases by assigning different schema labels to each connection.
 
-`php puko setup db`
+### Setting Up Additional Connections
 
+To add a new database connection, run the `php puko setup db` command and specify a unique schema name during the configuration process.
+
+Example `php puko setup db` session:
+
+```text
+Database Type (mysql, oracle, sqlsrv, mongo) : mysql
+Hostname (Default: localhost)               : localhost
+Port (Default: 3306)                         : 3306
+Schema Name (primary)                        : dashboard  <-- Use a unique label here
+Database Name                                : dashboardbbn
+Username                                     : root
+Password                                     : *******
 ```
-Database Type (mysql, oracle, sqlsrv, mongo) :mysql
-Hostname (Default: localhost) :localhost
-Port (Default: 3306) :3306
-Schema Name (primary) :dashboard <- notice here we use non primary label for multiple database connection
-Database Name :dashboardbbn
-Username :root
-Password :*******
-```
-After database configuration executed, as in `config/database.php` you will notice that now connection
-have 2 configurations:
+
+After configuration, your `config/database.php` file will contain multiple connection settings:
 
 ```php
 $db['primary'] = [
@@ -43,8 +44,9 @@ $db['primary'] = [
     'pass'   => '******',
     'dbName' => 'primary',
     'port'   => '3306',
-    'cache'   => false,
+    'cache'  => false,
 ];
+
 $db['dashboard'] = [
     'dbType' => 'mysql',
     'host'   => 'localhost',
@@ -52,35 +54,42 @@ $db['dashboard'] = [
     'pass'   => '******',
     'dbName' => 'dashboard',
     'port'   => '3306',
-    'cache'   => false,
+    'cache'  => false,
 ];
 ```
 
-<small>Keep in mind: Schema Name must unique. You can add another connection as you needs.</small>
+<small>**Note:** Each **Schema Name** must be unique within your application.</small>
 
-### CRUD operations for non `primary` connections.
+---
 
-* Insert
+### CRUD Operations with Multiple Connections
+
+When performing CRUD operations on a non-primary schema, you must specify the schema name in your code.
+
+#### Insert/Save
 
 ```php
+// Pass the schema name ('dashboard') as the second parameter to the constructor
 $object = new models(null, 'dashboard');
-...
+// ... set properties ...
 $object->save();
 ```
 
-<small>'dashboard' is the schema name configured from `config/database.php`</small>
-
-* Update
+#### Update/Modify
 
 ```php
+// Pass the ID and the schema name ('dashboard')
 $object = new models(20, 'dashboard');
-...
+// ... update properties ...
 $object->modify();
 ```
 
-* DBI
+#### Using the DBI Directly
+
+When using the `DBI` class, pass the schema name as the second parameter to `Prepare()`:
 
 ```php
+// Perform a query against the 'dashboard' schema
 $result = DBI::Prepare($sql, 'dashboard')->GetData();
 $result = DBI::Prepare($sql, 'dashboard')->FirstRow();
 ```

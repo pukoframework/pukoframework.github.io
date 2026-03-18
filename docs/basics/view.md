@@ -16,14 +16,13 @@ nav_order: 3
 
 ---
 
-View in puko is divided into master layout and hierarchical content generated automatically when you execute
-console command `php puko routes view add ...`. The most important thing you should know in first is: '_View part in puko don't have logic_'.
-Role model of view in puko is enough for render data, also render data in list with loop tags.
+The **View** in the Puko Framework is composed of a master layout and hierarchical content, generated automatically when you run the command `php puko routes view add ...`. A key principle in Puko is that the view layer does not contain business logic. Its role is solely to present data, including rendering lists using loop tags.
 
-<small>As the view layer in HMVC should do their job to **Presenting Data**. 
-You can utilize the full potential of JavaScript if want to build rich animation or logic in view. </small>
+<small>*Note: As the view layer in HMVC, its primary responsibility is **Presenting Data**. For advanced logic or animations, you can utilize the full power of JavaScript within your views.*</small>
 
-As *default* when *Puko* installed with composer you have this `master.html` file as starting point of view:
+### The Master Layout
+
+When Puko is installed with Composer, you receive a `master.html` file as your starting point:
 
 ```html
 <!DOCTYPE html>
@@ -50,83 +49,49 @@ As *default* when *Puko* installed with composer you have this `master.html` fil
 </html>
 ```
 
-<small>Puko utilize pure html file for View layer. So the file cannot disrupted with php syntax when the file grow bigger.</small>
+<small>*Puko utilizes pure HTML for its View layer, ensuring the file structure remains clean and is not disrupted by PHP syntax as it grows.*</small>
 
-As you can see Puko have a template syntax tag like `{!title}` `{CONTENT}` `{!part()}`. This called PTE tag.
-If you want to know more about the PTE tag, you can see the official project and documentation [here](https://github.com/Velliz/pte). 
+Puko uses a template syntax known as **PTE** tags. For more information, please see the [official PTE project documentation](https://github.com/Velliz/pte).
 
-Let's describe what that tag is doing in our html file:
+#### Common PTE Tags
 
-* Tag `{!title}`
+*   `{!title}`: Renders atomic data (in this case, the value of the `title` variable).
+*   `{CONTENT}`: Dynamically loads the content HTML file at runtime.
+*   `{!part(css)}`: Places CSS files declared in the content HTML file.
+*   `{!part(js)}`: Places JavaScript files declared in the content HTML file.
 
-This tag used for rendering atomic data. In this case the tag will render value from variables called **title**.
- 
-* Tag `{CONTENT}`
+You can have multiple master HTML files (e.g., `master.html`, `master-admin.html`, `master-guest.html`, `master-owner.html`). This is particularly useful for providing different layouts for different user roles.
 
-This tag will load the content html file in runtime.
+---
 
-* Tag `{!part(css)}`
+### Hierarchical Content
 
-This tag will place the css file declared form content html file.
+Content is organized in a hierarchical structure synchronized with your routing definitions. This enforces the HMVC pattern across your application.
 
-* Tag `{!part(js)}`
+Example: `php puko routes view add accounts/user/{?}/links`
 
-This tag will place the JavaScript file declared form content html file.
+*   **Controller:** `accounts\user`
+*   **Function:** `links`
+*   **Accept:** `GET`, `POST`
 
-You also can have more than one master html file. 
-This is useful when you need different template layout for different user roles for examples:
+#### Corresponding Files
 
-```text
-master.html
-master-admin.html
-master-guest.html
-master-owner.html
-```
+*   **HTML File:** `assets/html/id/accounts/user/links.html`
+*   **Controller File:** `controller/accounts/user.php`
 
-Besides the master html file. There is also _hierarchical content_ placed in same structure as routing definitions.
-This synchronization and restrictions applied to enforce HMVC always implemented in the right way. 
-So when you make a view routing like this:
+### Specifying a Master Layout
 
-`php puko routes view add accounts/user/{?}/links`
-
-```text
-controller     : accounts\user
-function       : links
-accept         : get,post
-```
-
-So you can find the html file in this hierarchical folder structure:
-
-```text
-- assets/
-  - html/
-    - id/
-      - accounts/
-        - user/
-          - links.html
-```
-
-Controller file
-
-```text
-- controller/
-  - accounts/
-    - user.php
-```
-
-Now, what about when you have a master html file more than one file? 
-You can create a new controller and easily switch between them with this command:
+If you have multiple master layouts, you can switch between them using a **Doc Tag** in your controller:
 
 ```php
 /**
  * #Master master-admin.html
  */
 class user extends View {
-    
     public function links() {
-    
+        // ...
     }
 }
 ```
 
-<small>Note: if the **#Master master-admin.html** command not declared. Puko will automatically reffer the default **master.html**</small>
+<small>*Note: if the **#Master** tag is not declared, Puko will automatically use the default **master.html** file.*</small>

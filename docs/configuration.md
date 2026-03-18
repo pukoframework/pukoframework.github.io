@@ -15,103 +15,102 @@ nav_order: 3
 
 ---
 
-
-All of configuration needed is already bind into `.env` file, but if you want to control more configuration in your workflow, all file is grouped together in one directory. View via github repo site's [config](https://github.com/velliz/puko/tree/master/config) as an example.
-
+Primary configuration settings are bound to the `.env` file. For more granular control over your workflow, configuration files are grouped within a single directory. You can view an example of the configuration structure in the [official GitHub repository](https://github.com/velliz/puko/tree/master/config).
 
 ## app.php
 
-App `config/app.php` used to hold read-only variable and later can retrieved in controller for usages.
-App file structured as PHP array and consists 3 root identifier `const`, `cache` and `logs`.
+The `config/app.php` file is used to store read-only variables that can be retrieved within your controllers. This file is structured as a PHP array and consists of three root identifiers: `const`, `cache`, and `logs`.
 
-- const
+### const
 
-You can register your constant in `const` sections of file. For example:
+You can register application-wide constants in the `const` section. For example:
 
 ```php
 <?php return [
     'const' => [
         'API' => 'https://localhost:3000/api/',
     ]
-    ...
+    // ...
 ];
 ```
 
-- cache
+### cache
 
-By default, Puko Framework utilize memcached as cache driver. You can configure the connection settings here.
+By default, the Puko Framework utilizes Memcached as its caching driver. You can configure the connection settings here.
 
 ```php
 <?php return [
-    ...
+    // ...
     'cache' => [
         'kind' => 'MEMCACHED',
         'expired' => 100,
         'host' => 'localhost',
         'port' => 11211,
     ]
-    ...
+    // ...
 ];
 ```
 
-<small>cache implementation coming soon</small>
+<small>*Note: Advanced cache implementations are coming soon.*</small>
 
-- logs
+### logs
 
-Puko utilize logs as a custom hook with build in **Slack Incoming WebHooks** for error reporting, by default set to false. If you have slack accounts, you can setup a **Incoming WebHook** URL and paste it in Slack url. Then in the Puko Framework Slack section, set the `active` state to `true`.
+Puko utilizes logs as a custom hook with built-in **Slack Incoming WebHooks** for error reporting (disabled by default). If you have a Slack account, you can set up an **Incoming WebHook** URL and provide it in the configuration. Set the `active` state to `true` to enable Slack notifications.
 
-<small>custom logs is coming soon</small>
+<small>*Note: Support for custom logs is coming soon.*</small>
 
 ## database.php
 
-Database configurations located at `config/database.php` folder. You can specify more than one connection because puko uses schema name for each connection string. Puko also scaffolds database configuration process with `pukoconsole` tools included as _dev-dependency_.
+Database configurations are located in the `config/database.php` directory. You can specify multiple connections by using unique schema names as identifiers. Puko simplifies the database configuration process via the `pukoconsole` tool, which is included as a development dependency.
 
-<small> as version 1.1.6 puko only supports MySQL and MSSQL database engine</small>
+<small>*As of version 1.1.6, Puko supports MySQL and MSSQL database engines.*</small>
+
+To set up your database, run:
 
 ```bash
 php puko setup db
 ```
 
-or if you only refresh the database (without re-write the database configuration): `php puko refresh db`
+To refresh the database without overwriting existing configurations, use: `php puko refresh db`.
 
-Items asked:
+### Configuration Parameters
 
-|Items|Description|Examples|
-|---|---|---|
-|Database Type|Only supports MySQL and MSSQL for now|mysql|
-|Hostname|Databaase IP address|localhost|
-|Port|Databaase port address|3306|
-|Schema Name|Schema name as identifier for multiple database|primary|
-|Database Name|Name of databases|inventory|
-|Username|User databases|root|
-|Password|Password databases|******|
-|Driver|Database Driver|mysql|
+| Parameter | Description | Example |
+| :--- | :--- | :--- |
+| **Database Type** | Supported engines: `mysql` or `mssql`. | `mysql` |
+| **Hostname** | The IP address or hostname of the database server. | `localhost` |
+| **Port** | The port used by the database server. | `3306` |
+| **Schema Name** | A unique identifier for the connection (e.g., for multiple databases). | `primary` |
+| **Database Name** | The name of the database. | `inventory` |
+| **Username** | The database user. | `root` |
+| **Password** | The password for the database user. | `******` |
+| **Driver** | The specific database driver to use. | `mysql` |
 
-<small>At the end wizard is asking for another connection you can answer with y/n</small>
+<small>*The setup wizard will ask if you would like to configure additional connections (y/n).*</small>
 
-You can refer to database section for detailed information.
+For more detailed information, please refer to the [Database]({{ site.baseurl }}{% link docs/databases/index.md %}) section.
 
 ## encryption.php
 
-Encryption required to secure many aspects in our applications. Puko framework mostly using this to secure user authentication data in several forms. Sessions, Cookies, and Bearer. Puko can scaffolds this process with `pukoconsole` tools included as _dev-dependency_.
+Encryption is essential for securing various aspects of your application. The Puko Framework uses encryption primarily to protect user authentication data across Sessions, Cookies, and Bearer tokens. This can be configured using the `pukoconsole` tool.
 
-<small>Puko using AES-256-CBC as encryption algorithms</small>
+<small>*Puko utilizes the AES-256-CBC encryption algorithm.*</small>
 
-To start configure Encryption, you can type in _console/terminal/powershell_:
+To configure encryption, run the following command in your terminal:
 
-```text
+```bash
 php puko setup secure
 ```
 
 ## routes.php
 
-Routes located in `config/routes.php` and holds all routing information. This file supposed as read-only because most of the puko routing done with `pukoconsole` tools included as _dev-dependency_.
+The `config/routes.php` file contains all routing information. This file is intended to be read-only, as most routing is managed automatically by the `pukoconsole` tool.
 
-See [Routing]({{ site.baseurl }}{% link docs/basics/routing.md %}) for more information.
+For more details, see the [Routing]({{ site.baseurl }}{% link docs/basics/routing.md %}) documentation.
 
-## `custom`.php
+## custom.php
 
-Puko framework can also create custom config file. for example if you want to add RabbitMQ message queue you can create new `config/rabbitmq.php` file
+Puko allows for the creation of custom configuration files. For example, if you wish to integrate RabbitMQ, you can create a `config/rabbitmq.php` file:
 
 ```php
 <?php return [
@@ -122,17 +121,19 @@ Puko framework can also create custom config file. for example if you want to ad
 ];
 ```
 
-_note: Custom `<file>.php` is available trough app lifecycles via `Config::Data('<file>')`. Which will allow for more control and expansion of all the functionality of the framework itself._
+Custom configuration files are accessible throughout the application lifecycle via `Config::Data('<filename>')`. This provides a flexible way to extend the framework's functionality.
 
-You can retrieve the value with this code snippet:
+### Usage Example
+
+You can retrieve values using the following code snippet:
 
 ```php
-//initialize config skeleton
+// Initialize the config data
 $config = pukoframework\config\Config::Data('rabbitmq');
 
-//retrieve the value
-$config['username'];
-$config['password'];
-$config['host'];
-$config['port'];
+// Retrieve values
+$username = $config['username'];
+$password = $config['password'];
+$host     = $config['host'];
+$port     = $config['port'];
 ```

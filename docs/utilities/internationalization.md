@@ -16,60 +16,60 @@ nav_order: 4
 
 ---
 
-Challenge faced when a website or api service dealing with multiple language is to maintain the overall performance.
-To archive that expectations, multiple language in puko divided into 2 main concern: frontend and backend.
-The very first step to determinate what language to use is client HTTP request. 
-HTTP Request can vary from web browser, native mobile apps or desktop applications.
+Managing multiple languages for a website or API without sacrificing performance is a common challenge. The Puko Framework addresses this by dividing internationalization into two main concerns: the frontend and the backend.
 
-So when requesting resource to server, you can pass custom `X_LANG` 
-header with value of 2 digits lowercase based country code as language code.
-if the custom header don't exist puko will use default value 'id'.
+### Language Detection
 
-In the code level, we can achieve it 2 step. First we will deal with frontend html file.
-Separated html language is use to maintaining performance. With cost became redundant.
+The framework determines the language to use based on the client's HTTP request. Clients (web browsers, mobile apps, or desktop applications) should send a custom `X_LANG` header containing a two-digit lowercase country code (e.g., `en`, `id`, `jp`). If this header is missing, the framework defaults to `id`.
 
-You can crate the html file like shown below:
+### Frontend Localization (HTML)
+
+To maintain optimal performance, the Puko Framework uses separate HTML files for different languages. This approach prevents unnecessary runtime processing, though it requires maintaining copies of your templates for each supported language.
+
+Organize your HTML files in the following directory structure:
 
 ```text
-assets
-   html
-      en
-         function
-            template.html
-      id
-         function
-            template.html
+assets/
+  html/
+    en/
+      function/
+        template.html
+    id/
+      function/
+        template.html
 ```
 
-<small>you can add another language code by yourself like `cn`, `kr`, `jp` and so on.</small>
+<small>*Note: You can add any ISO 639-1 language code as needed (e.g., `cn`, `kr`, `jp`).*</small>
 
 ---
 
-In the backend side, language maintained directly from controller with function called `say()`.
-For example:
+### Backend Localization (PHP)
+
+On the backend, localization is managed through the `say()` helper method within your controllers.
+
+#### Basic Usage
 
 ```php
 throw new Exception($this->say('NOT_FOUND'));
 ```
 
-<small>say called with `$this` because the functions inherited from controller.</small>
+The key (e.g., `NOT_FOUND`) is stored in JSON files located in `assets/master/`. For example, `id.master.json` or `en.master.json`.
 
-The 'NOT_FOUND' key you noticed is stored in json file in `assets/master/id.master.json` by default.
-You can also add new json file with language code as you wish `en.master.json`, `cn.master.json' so on.
+#### Dynamic Values
 
-You can also pass a custom string into variable with second parameter of `say`
+You can pass custom variables to your localized strings using the second parameter of the `say()` method.
 
 ```php
 throw new Exception($this->say('WRONG_ADDR', [$username, $email]));
 ```
 
-Place %s in the json file to retreive the custom value:
+In your JSON language file, use `%s` (standard `sprintf` format) to define where the variables should be inserted:
 
 ```json
 {
     "NOT_FOUND": "No data found",
-    "WRONG_ADDR": "Address for %s not found with email: %s"
+    "WRONG_ADDR": "The address for %s was not found for the email: %s"
 }
 ```
 
-Now language resources can be translated and centralized.
+This centralized approach allows your application's language resources to be easily translated and maintained.

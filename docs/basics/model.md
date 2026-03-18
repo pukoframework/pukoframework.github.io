@@ -16,59 +16,50 @@ nav_order: 5
 
 ---
 
-Let's get to know about model. The (M) layer of puko framework HMVC pattern.
-This part of puko has responsible to connecting your app with a database 
-or multiple database for Create, Read, Update and Delete operations.
-Database in puko handled by the DataBase Interface (DBI) singleton objects.
+The **Model (M)** layer in the Puko Framework's HMVC architecture is responsible for connecting your application to one or more databases for CRUD operations. All database operations are handled by the **DataBase Interface (DBI)** singleton object.
 
-But, before that, we need setup a database connections. To summarize the process we often using `pukoconsole` command:
+### Database Setup
+
+To simplify the connection setup, use the `pukoconsole` tool:
 
 ```bash
 php puko setup db
 ```
 
-Items asked:
+#### Configuration Parameters
 
-|Items|Description|Examples|
-|---|---|---|
-|Database Type|only supports MySQL for now|mysql|
-|Hostname|Databaase IP address|localhost|
-|Port|Databaase port address|3306|
-|Schema Name|Schema name as identifier for multiple database|primary|
-|Database Name|Name of databases|inventory|
-|Username|User databases|root|
-|Password|Paassword databases|******|
+| Parameter | Description | Example |
+| :--- | :--- | :--- |
+| **Database Type** | Currently supports MySQL/MariaDB. | `mysql` |
+| **Hostname** | Database server IP address or hostname. | `localhost` |
+| **Port** | Database server port. | `3306` |
+| **Schema Name** | A unique identifier for the connection. | `primary` |
+| **Database Name** | The name of the database. | `inventory` |
+| **Username** | The database user. | `root` |
+| **Password** | The database password. | `******` |
 
-<small>At the end wizard is asking for another connection you can answer with y/n</small>
+<small>*Note: You can configure additional connections as needed.*</small>
 
-What this process means?
+Puko stores the connection settings in `config/database.php` and generates corresponding PHP class models (Data Object Wiring) in the `plugins/model/<schema>` directory. These generated files should not be modified.
 
-Puko will save the connection setting in `config/database.php` file 
-and generate corresponding PHP class model as **data object wiring** with your database model.
-Those files generated and saved in `plugins/model/<schema>` directory.
+---
 
-<small>That file should not be modified</small>
+### Data Object Wiring
 
-So, why we need **data object wiring**?
+Data object wiring is inspired by the **Data Access Object (DAO)** pattern. It provides an intuitive way to interact with your database columns through object properties, including full IDE auto-completion.
 
-At concept level, data object wiring inspired by Data Access Object (DAO) patterns 
-but only implement the wiring mechanism to keep it small and simple.
-And because we usually don't remember clearly the column on database entity. 
-So with object wiring you now have clues about your column on the database in case you forget.
-Especially when used with good IDE, those tools can provide auto-completions trough your data.
-Enough theory, let's see it in action.
+Assume you have a database table named `inventory`:
 
-Assumed you have basic knowledge on MySQL and have a database table `inventory` and you already done executing setup db command above.
-This is example of what inside table `inventory`:
+| id | name | created | descriptions |
+| :--- | :--- | :--- | :--- |
+| 1 | Chair | 2020-08-15 | Minimalist chair made from pine wood. |
+| 2 | Laptop | 2020-08-16 | Gaming notebook with core i7 and RTX2070 Max-Q. |
 
-|id|name|created|descriptions|
-|---|---|---|---|
-|1|Chair|2020-08-15|Minimalist chair made from pine woods|
-|2|Laptop|2020-08-16|Gaming notebooks with core i7 and RTX2070 Max-Q|
+<small>**Important:** Table names must only contain letters without special characters or spaces.</small>
 
-<small>Alert: tables name must only contain letters without special character or space due to limitations of php class name rules.</small>
+#### Basic CRUD Operations
 
-Create or save operations:
+*   **Create/Save:**
 
 ```php
 $inventory = new plugins\model\primary\inventory();
@@ -80,88 +71,61 @@ $inventory->descriptions = $_POST['descriptions'];
 $inventory->save();
 ```
 
-Read operations:
+*   **Read:**
 
 ```php
 $inventory = new plugins\model\primary\inventory(1);
-
 echo (array) $inventory;
 ```
 
-Update or modify operations:
+*   **Update/Modify:**
 
 ```php
 $inventory = new plugins\model\primary\inventory(1);
-$inventory->id = $_POST['id'];
-$inventory->name = $_POST['name'];
-$inventory->created = date('Y-m-d');
-$inventory->descriptions = $_POST['descriptions'];
-
+$inventory->name = "Updated Name";
 $inventory->modify();
 ```
 
-Delete or remove operations:
+*   **Delete/Remove:**
 
 ```php
 $inventory = new plugins\model\primary\inventory(1);
-
 $inventory->remove();
 ```
 
-Get all data:
+*   **Get All Data:**
 
 ```php
 $all = plugins\model\primary\inventoryContracts::GetAll();
 ```
 
-As you can see. Basic CRUD operations is simple and don't need to use any manual typed SQL query.
+---
 
-<small>The DataBase Interface (DBI) in puko framework for now only support MySQL and MariaDB. </small>
+### Custom Models & Complex Queries
 
-But then how about run the stored procedure or executing complex query like join operations?
+For more complex scenarios, such as joins or stored procedures, you can extend the generated model and implement **ModelContracts**.
 
-For executing stored procedure you can follow this example:
-
-```php
-DBI::Call('stored_procedure_name', [
-    $parameter1, $parameter2
-]);
-```
-
-For complex query you can extends the model classes and implement **ModelContracts** in order to have uniformity.
-Let's see by example:
-
-Create new php file: `model/InventoryModel.php`
+Create a new model: `model/InventoryModel.php`
 
 ```php
 class InventoryModel extends inventory implements ModelContracts {
+    // Implement the 9 abstract methods from ModelContracts
+}
 ```
 
-The **ModelContracts** interface will be forcing you to implement 9 abstract method.
+#### ModelContracts Methods
 
-`GetData()` This method should return data available on the database in array structure
+*   `GetData()`: Returns all database entries in an array format.
+*   `GetById($id)`: Returns a single row specified by its ID.
+*   `IsExists($id)`: Returns true if a record exists for the given ID.
+*   `IsExistsWhere($column, $value)`: Returns true if a record exists matching a custom condition.
+*   `GetDataSize()`: Returns the total count of records.
+*   `GetDataSizeWhere($condition)`: Returns the count of records based on a specific condition.
+*   `GetLastData()`: Returns the most recently inserted record.
+*   `SearchData($keyword)`: Returns search results in an array format.
+*   `GetDataTable($condition)`: Returns search results formatted for DataTables JSON.
 
-`GetById($id)` This method should return one row from database specified by id
-
-`IsExists($id)` This method should return true if row found or false if not found from database specified by id
-
-`IsExistsWhere($column, $value)` This method should return true if row found or false if not found from database specified by custom selection
-
-`GetDataSize()` This method should return count of the data on the database
-
-`GetDataSizeWhere($condition)` This method should return count of the data on the database with selected conditions
-
-`GetLastData()` This method should return last inserted data
-
-`SearchData($keyword)` This method should return search result data available on the database in array structure
-
-`GetDataTable($condition)` This method should return search result data available on the database in datatables json format
-
-These pre-defined method above created to give developer the start point. 
-Puko framework have this to offer consistency and because most database operation can handled by these pre-defined method. 
-Let's see it through sample code:
-
-InventoryModel.php
+#### Implementation Example
 
 ```php
 public static function SearchData($keyword = []) {
@@ -171,74 +135,27 @@ public static function SearchData($keyword = []) {
     }
 
     $sql = sprintf("SELECT i.id, i.created, i.name, i.descriptions
-    FROM inventory i
-    WHERE (i.created IS NOT NULL) %s;", $strings);
+                    FROM inventory i
+                    WHERE (i.created IS NOT NULL) %s;", $strings);
 
     return DBI::Prepare($sql)->GetData();
 }
 ```
 
-```php
-//now we using InventoryModel. Our custom class that extends inventory plugin model.
-$inventoru = InventoryModel::SearchData([
-    'created' => '2020-08-14'
-]);
-```
-
-Why puko have this type of interface? The goal is uniformity. But keep in mind it's optional,
-you can have your own way to work with the databases.
-
 ---
 
-**DBI**
+### The DataBase Interface (DBI)
 
-You already know how to do CRUD operations with **data object wiring**. This section will explain with code sample
-another set of feature available in DBI.
+The DBI class offers powerful features for interacting with your database directly.
 
-* `Prepare`
+*   `Prepare`: Passes a SQL query to the DBI class.
+*   `GetData($params)`: Retrieves all data in an indexed array format. Supports prepared statements (e.g., `@1`, `@2`).
+*   `FirstRow($params)`: Retrieves only the first row in a single array format.
+*   `Run($params)`: Executes queries that do not return a result set (e.g., `UPDATE`, `DELETE`, or Stored Procedures).
 
-To pass your sql query into DBI classes.
-
-```php
-$sql = "SELECT * FROM inventory WHERE (id = @1);";
-$response = DBI::Prepare($sql);
-```
-
-* `GetData()`
-
-Used to retrieve all data from the database in arrays indexed format. Prepared statement is also available.
-You can se it from example below:
-
-```php
-$sql = "SELECT * FROM inventory WHERE (id = @1);";
-$response = DBI::Prepare($sql)->GetData($id);
-```
+Example with Prepared Statements:
 
 ```php
 $sql = "SELECT * FROM inventory WHERE (id = @1) AND (name = @2);";
 $response = DBI::Prepare($sql)->GetData($id, $name);
-```
-
-```php
-$sql = "SELECT * FROM inventory WHERE (id = @1) AND (name = @2) AND (created = @3);";
-$response = DBI::Prepare($sql)->GetData($id, $name, $created);
-```
-
-* `FirstRow()`
-
-As `GetData()` but only retrieve 1 row data in single array formats. Prepared statement is also available.
-You can se it from example below:
-
-```php
-$sql = "SELECT * FROM inventory WHERE (id = @1) LIMIT 1;";
-$response = DBI::Prepare($sql)->FirstRow();
-```
-
-* `Run()`
-
-For executing query. Usually used for executing stored procedure and non select query.
-
-```php
-$sql = "UPDATE inventory SET name = 'Laptop Ultrabooks' WHERE (id = @1);";
-$response = DBI::Prepare($sql)->Run($id);
 ```

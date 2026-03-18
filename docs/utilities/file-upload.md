@@ -16,80 +16,91 @@ nav_order: 3
 
 ---
 
-*Puko* provides libs to facilitate the file upload process.
-You can directly upload files using the html form as shown below:
+The Puko Framework provides built-in libraries to simplify the file upload process.
+
+### HTML Implementation
+
+To upload files, ensure your HTML form uses the `POST` method and the `enctype="multipart/form-data"` attribute:
 
 ```html
-<form action="" method="POST" enctype="multipart/form-data">
+<form action="/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="filedata" />
+    <button type="submit">Upload</button>
 </form>
 ```
 
 ---
 
-Backend processing of file can done in controller with the File lib included in puko framework.
-Let's see it in action from code below:
+### Backend Processing
 
-```
+In your controller, you can handle file uploads using the `Request::Files` utility.
+
+#### Basic Retrieval
+
+```php
 $file = Request::Files('filedata', null, true);
 ```
 
-First parameter of the object instantiation is to tell the file library that `filedata` is the expected name of the data send by HTTP Request.
-Second parameter is to make the alternative value if the expected data send by HTTP Request not exists. so we set `null` for it now.
-Last param is boolean value if `true` to tell the File to transform data as PHP objects or `false` to keep it defaults as array.
-For simplicity we will using `true` so the data retreived from $_FILE converted into objects.
+*   **First Parameter:** The expected key name from the HTTP `$_FILES` array (e.g., `filedata`).
+*   **Second Parameter:** A default fallback value if the file is not found (e.g., `null`).
+*   **Third Parameter:** A boolean value. If `true`, the utility transforms the file data into a PHP object; if `false`, it returns the default array structure.
 
-If you want to add some validations, you can write the code like example below:
+#### Validation
+
+You can easily add validations using the `File` object's methods:
 
 ```php
 if ($file === null) {
-    throw new Exception($this->say('FILE_REQUIRED'));
+    throw new Exception("File is required.");
 }
 
-//it will check file size and throw error if size greater than 15MB
-if ($file->isSizeSmallerThan(15 * Files::MB)) {
-    throw new Exception($this->say('FILE_TO_LARGE'));
+// Check if the file size is within limits (e.g., 15MB)
+if (!$file->isSizeSmallerThan(15 * Files::MB)) {
+    throw new Exception("The file is too large. Maximum size is 15MB.");
 }
-//global is error from native PHP
+
+// Check for native PHP upload errors
 if ($file->isError()) {
-    throw new Exception('FILE_ERROR');
+    throw new Exception("An error occurred during the file upload process.");
 }
 ```
 
-List of all method available for use in File lib:
+### Available Methods
+
+The following methods are available for managing uploaded files:
+
+*   `getName()`: Retrieves the original file name.
+*   `getType()`: Retrieves the MIME type of the file.
+*   `getTmpName()`: Retrieves the temporary server path of the uploaded file.
+*   `isError()`: Returns `true` if a native PHP upload error occurred.
+*   `getSize()`: Retrieves the file size in kilobytes (kB).
+*   `isSizeSmallerThan(float $limit)`: Validates that the file is smaller than the specified limit (default: 10MB).
+*   `getFile()`: Retrieves the binary content or the temporary path for further processing.
+
+### Saving the File
+
+#### To a Database
 
 ```php
-getName(); //get file name
-getType(); //get file type
-getTmpName(); //get temporary name of the server in the request-response cycles
-isError(); //global is error from native PHP
-getSize(); //get size of the file in kB
-isSizeSmallerThan(float $expectations = 10 * Files::MB); //file size validation and default value set to is lower than 10MB
-getFile(); //get binary file
-```
-
-For example, you can save it to database like this:
-
-```php
-$actual_data =  $file->getFile();
-
 $model = new \plugins\model\data();
 
-//in MySQL, column data type of "filedata" assigned to longblob
+// In MySQL, ensure the column (e.g., 'filedata') is set to 'LONGBLOB'
 $model->filedata = $file->getFile();
 $model->save();
 ```
 
-You can also save the uploaded file in server directory. For example:
+#### To the Server Directory
 
 ```php
-$actual_data =  $file->getFile();
+$targetDir = Framework::$factory->getRoot() . '/uploads/listing';
 
-$extensions = explode('.', $actual_data);
-$server_dir_path = Framework::$factory->getRoot() . '/uploads/listing';
-if (!is_dir($server_dir_path)) {
-    mkdir($server_dir_path);
+if (!is_dir($targetDir)) {
+    mkdir($targetDir, 0755, true);
 }
-$upload_path = Framework::$factory->getRoot() . '/uploads/listing/' . $file->getName();
-move_uploaded_file($actual_data, $upload_path);
+
+$uploadPath = $targetDir . '/' . $file->getName();
+
+if (move_uploaded_file($file->getTmpName(), $uploadPath)) {
+    // File moved successfully
+}
 ```

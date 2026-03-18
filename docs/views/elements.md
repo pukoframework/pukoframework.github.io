@@ -16,76 +16,90 @@ nav_order: 1
 
 ---
 
-Element is a *feature set* originally from pte, 
-template engine that is puko framework used to create segments of view as standalone modular modules, detachable, and reusable.
-The element itself consists of a package of html, javascript, css and php file to manage the logic of these elements.
+**Elements** is a feature set originally from **PTE** (the template engine used by the Puko Framework). Elements allow you to create standalone, modular, and reusable view segments. Each element is a self-contained package consisting of HTML, JavaScript, CSS, and a PHP logic file.
 
-To download the Element set, you can use the following *command*.
+### Managing Elements via CLI
+
+#### Downloading Elements
+
+You can download existing elements from the [official elements repository](https://github.com/Velliz/elements) using the following command:
  
-```text
+```bash
+php puko element download <element_name>
+```
+
+Example:
+
+```bash
 php puko element download adminlte_description
 ```
 
-Note: you can see what elements are available for download from [this](https://github.com/Velliz/elements) page.
+#### Creating New Elements
 
-You can also create a new element with the command:
+To create a new, custom element, use the `add` command:
 
-```text
+```bash
 php puko element add <element_name>
 ```
 
-You can change <element_name> name it freely according to your wishes.
+<small>**Important:** Element names must not contain spaces or start with numbers. It is recommended to use alphanumeric characters and underscores `[a-z_A-Z]` only.</small>
 
-<small>Attention: naming elements must not use spaces or numbers in front of them. Recomends to include [a-z_A-Z] character only.</small>
+### Element Structure
 
-After an element is created or downloaded, it will be saved in the directory like the structure shown below.
-
-```text
-- plugins
-  - elements
-   - <element_name>
-     - <element_name>.php
-     - <element_name>.html
-     - <element_name>.js
-     - <element_name>.css
-```
-
-For experiments, you can start from downloading the following sample first:
+Once an element is created or downloaded, it is stored in the `plugins/elements` directory with the following structure:
 
 ```text
-php puko element download adminlte_description
+- plugins/
+  - elements/
+    - <element_name>/
+      - <element_name>.php   (PHP Logic)
+      - <element_name>.html  (HTML Template)
+      - <element_name>.js    (JavaScript Assets)
+      - <element_name>.css   (CSS Styles)
 ```
 
-Then create the Element instance from the controller.
+### Implementation Example
+
+After downloading or creating an element, you can instantiate it within your controller.
+
+**Controller Implementation:**
 
 ```php
 public function profile() 
 {
-    //call element PHP class
-    $desc = new AdminLTE_Description('desc', array());
+    // Instantiate the element class
+    $desc = new AdminLTE_Description('desc', []);
+    
+    // Set element-specific configurations
     $desc->SetStyle(AdminLTE_Description::HORIZONTAL);
-    $desc->SetDescription(array(
-        array(
+    $desc->SetDescription([
+        [
             'Title' => 'Didit Velliz',
-            'Text' => 'Programmer',
-        ),
-        array(
+            'Text'  => 'Programmer',
+        ],
+        [
             'Title' => 'Lois',
-            'Text' => 'Gamer',
-        ),
-        array(
+            'Text'  => 'Gamer',
+        ],
+        [
             'Title' => 'Christian',
-            'Text' => 'Lead Developer',
-        )
-    ));
+            'Text'  => 'Lead Developer',
+        ]
+    ]);
+
+    // Pass the element object to the view data
     $data['desc'] = $desc;
+    
+    return $data;
 }
 ```
 
-On the html page, you can render the tag by writing:
+**HTML Template Implementation:**
+
+To render the element in your HTML file, use the corresponding PTE tag:
 
 ```html
-<div>
+<div class="profile-section">
     {!desc}
 </div>
 ```

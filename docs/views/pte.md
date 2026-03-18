@@ -16,108 +16,89 @@ nav_order: 1
 
 ---
 
-Puko Template Engine is a package that helps *Puko* process displayed html.
-All tags that can be used are summarized in the following table.
+The **Puko Template Engine (PTE)** is the standard rendering engine used by the Puko Framework to process and display HTML. It uses a specific set of tags to inject data, handle loops, and manage assets.
 
-|Tags|Description|
-|---|---|
-| {!x} | tags to print values, data or elements |
-| `<!--{!x}-->` | **open** looping tag |
-| `<!--{/x}-->` | **close** looping tag |
-| {!fn()} | **function** tag without parameter |
-| {!fn(x)} | **function** tag with one parameter |
-| {!fn(x,y,z)} | **function** tag with many parameters |
-| {CONTENT} | **CONTENT** tag for injecting content html file to master *file* |
-| {!css(<link href="" rel="stylesheet" type="text/css" />)} | **CSS** tag |
-| {!js(<script src="" type="text/javascript"></script>)} | **JavaScript** tag |
-| {!part(css)} | move **CSS** tag from content html to tag location somewhere in master |
-| {!part(js)} | move **JavaScript** tag from content html to tag location somewhere in master |
-| {x.html} | tag for load segment file |
+### Available Tags
 
-<small>Attention: **Elements** can be seen in the **Elements** document section.</small>
+| Tag | Description |
+| :--- | :--- |
+| `{!x}` | Standard tag for printing values, data, or elements. |
+| `<!--{!x}-->` | **Opening** tag for loops. |
+| `<!--{/x}-->` | **Closing** tag for loops. |
+| `{!fn()}` | Function tag with no parameters. |
+| `{!fn(x)}` | Function tag with a single parameter. |
+| `{!fn(x,y,z)}` | Function tag with multiple parameters. |
+| `{CONTENT}` | Injects the content HTML file into the master layout. |
+| `{!css(<link ... />)}` | Defines a **CSS** resource in a content file. |
+| `{!js(<script ... ></script>)}` | Defines a **JavaScript** resource in a content file. |
+| `{!part(css)}` | Moves defined CSS from the content file to this location in the master layout. |
+| `{!part(js)}` | Moves defined JavaScript from the content file to this location in the master layout. |
+| `{x.html}` | Loads a specific HTML segment file. |
+
+<small>**Note:** For more information on using **Elements**, please refer to the [Elements]({{ site.baseurl }}{% link docs/views/elements.md %}) documentation.</small>
+
+### Basic Usage
+
+To display a value in your HTML:
 
 ```html
-<span>{!x}</span>
+<span>{!score}</span>
 ```
 
-The value `x` can be exchanged into other values by means of.
+In your controller, assign the corresponding value to the data array:
 
 ```php
-public function siswa() {
-    $data['x'] = 34;
+public function student() {
+    $data['score'] = 95;
     return $data;
 }
 ```
 
-The result, will look like the following:
+The resulting HTML will be:
 
 ```html
-<span>34</span>
+<span>95</span>
 ```
 
-You can also convert `x` into other variables as needed.
+### Looping through Data
+
+To render a list of items, use the loop tags:
 
 ```html
 <table>
-    <!--{!siswa}-->
+    <!--{!students}-->
     <tr>
-        <td>{!nama}</td>
-        <td>{!alamat}</td>
-        <td>{!umur}</td>
+        <td>{!name}</td>
+        <td>{!address}</td>
+        <td>{!age}</td>
     </tr>
-    <!--{/siswa}-->
+    <!--{/students}-->
 </table>
 ```
 
-The value **student** which is a looping tag can be echoed as list of data in pte view rendering process.
+In your controller, provide an array of data:
 
 ```php
-public function siswa() {
-    $data['siswa'] = Siswa::GetAll();
+public function list() {
+    $data['students'] = [
+        [
+            'name'    => 'Didit Velliz',
+            'address' => 'Bandung',
+            'age'     => 26
+        ],
+        [
+            'name'    => 'Puko Framework',
+            'address' => 'Jakarta',
+            'age'     => 18
+        ]
+    ];
     return $data;
 }
 ```
 
-Or, directly hardcode the data for now as projection.
+### Managing Assets
 
-```php
-public function siswa() {
-    $data['siswa'] = array(
-        array(
-            'nama' => 'Didit Velliz',
-            'alamat' => 'Bandung',
-            'umur' => 12
-        ),
-        array(
-            'nama' => 'Puko Framework',
-            'alamat' => 'Jakarta',
-            'umur' => 18
-        )
-    );
-    return $data;
-}
-```
-
-The result, will look like the following:
-
-```html
-<table>
-    <tr>
-        <td>Didit Velliz</td>
-        <td>Bandung</td>
-        <td>12</td>
-    </tr>
-    <tr>
-        <td>Puko Framework</td>
-        <td>Jakarta</td>
-        <td>18</td>
-    </tr>
-</table>
-```
-
----
-
-You can write the use of assets on content like the following example.
+You can define CSS and JavaScript requirements directly in your content HTML files:
 
 ```html
 {!css(<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>)}
@@ -126,32 +107,28 @@ You can write the use of assets on content like the following example.
 {!js(<script src="assets/js/dataTables.bootstrap.min.js"></script>)}
 ```
 
-<small>if you want to comment the code use html comment tag like this: {!js(<!--<script src="...bootstrap.min.js"></script>-->)}</small>
+To prevent an asset from being rendered, you can wrap it in an HTML comment within the tag: `{!js(<!--<script src="..."></script>-->)}`.
 
-Make sure you also have forwarded the file to the master template.
-Usually, in the master template there by default will have the following input tags.
+Ensure your **Master Layout** includes the `{CONTENT}` tag and the `{!part()}` tags to properly inject these assets:
 
 ```html
 <html>
-    <head>...</head>
+    <head>
+        {!part(css)}
+    </head>
     <body>
-    ...
-    {CONTENT}
-    ...
-    {!part(css)}
-    {!part(js)}
+        <div class="container">
+            {CONTENT}
+        </div>
+        {!part(js)}
     </body>
 </html>
 ```
 
----
+### Helper Functions
 
-To get website `base url` in html file, write the following function syntax:
+To retrieve the application's **base URL** within an HTML file, use the following syntax:
 
-```text
-{!url()}
-```
-
-```text
-{!url()}user/beranda
+```html
+<a href="{!url()}user/profile">Profile</a>
 ```

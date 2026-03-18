@@ -16,22 +16,22 @@ nav_order: 7
 
 ---
 
-Role is part-of the Auth. For specifying what user can do, what user cannot do. and so on. 
-At implementation level, you can see it in `PukoAuth` class instance as seconds parameter:
+Roles and permissions are integral components of the Authentication (Auth) system in the Puko Framework. They define what an authenticated user can or cannot do within the application. At the implementation level, you specify permissions within the `PukoAuth` class instance:
 
 ```php
 public function Login($username, $password)
 {
-    ...
-    $permission = [];
-    return new PukoAuth([], $permission);
+    // ...
+    $permissions = ["MANAGER"];
+    return new PukoAuth([], $permissions);
 }
 ```
 
-From code sample above, you have permission wrapped as array of 'strings', so any authentication can consists of
-no permission, one permission, or many permissions as needed.
+From the example above, permissions are passed as an array of strings. An authentication result can include no permissions, one permission, or multiple permissions.
 
-Puko also have a doc command to seal a function with an permission code like this:
+### Restricting Access via Permissions
+
+Puko provides a **Doc Tag** to protect a function based on specific permission codes:
 
 ```php
 /**
@@ -41,9 +41,6 @@ Puko also have a doc command to seal a function with an permission code like thi
 public function profile()
 ```
 
-Permission defined as `MANAGER`. 
-So only user with this permission assigned can access the functions.
+In this case, the function is sealed with the `MANAGER` permission. Only users with this permission assigned will be able to access the function.
 
-<small>You need to write full path with PSR-4 directory structure to your plugin auth class.
-`\pukoframework\auth\Bearer@\plugins\auth\UserAuth`</small>
-
+<small>**Important:** You must use the full PSR-4 directory path to your plugin auth class when defining the permission: `\pukoframework\auth\Bearer@\plugins\auth\UserAuth`.</small>
