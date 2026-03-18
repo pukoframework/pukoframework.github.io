@@ -2,17 +2,16 @@
 layout: default
 title: Home
 nav_order: 1
-description: "Puko Framewok, fullstack PHP framework for Rapid Application Development."
+description: "Puko Framework, fullstack PHP framework for Rapid Application Development."
 permalink: /
 ---
 
 # Puko Framework
 {: .fs-9 }
 
-Welcome to Puko Framewok, fullstack PHP framework for Rapid Application Development.
+Welcome to the Puko Framework, a full-stack PHP framework designed for Rapid Application Development.
 {: .fs-6 .fw-300 }
 
-[![StyleCI Status](https://styleci.io/repos/65143717/shield)](https://styleci.io/repos/65143717/shield)
 [![Latest Stable Version](https://poser.pugx.org/puko/framework/v/stable)](https://packagist.org/packages/puko/framework)
 [![Total Downloads](https://poser.pugx.org/puko/framework/downloads)](https://packagist.org/packages/puko/framework)
 
@@ -24,32 +23,33 @@ Welcome to Puko Framewok, fullstack PHP framework for Rapid Application Developm
 
 ### Dependencies
 
-Like another PHP framework out there, the standard PHP extension required for running Puko Framework is `Composer`, `php-json`, `php-pdo`, `php-pdo-mysql`, `php-gd` and PHP version required was `7.0` or newer. You may also required another extension from additionally thrid party library installed via composer. You can also running this framework with bundled tools like [Laragon](https://laragon.org/download/index.html) or [XAMPP](https://www.apachefriends.org/download.html).
+Like other modern PHP frameworks, the Puko Framework requires **PHP 7.0 or newer**. Standard extensions include `Composer`, `php-json`, `php-pdo`, `php-pdo-mysql`, and `php-gd`. You may also require additional extensions depending on third-party libraries installed via Composer. You can run this framework using tools like [Laragon](https://laragon.org/download/index.html) or [XAMPP](https://www.apachefriends.org/download.html).
 
 ### Quick start
 
-1. Install via composer
+1. **Install via Composer:**
 ```bash
 composer create-project velliz/puko <project-name>
 ```
-<small>You must have PHP and composer installed and accessible via command prompt/terminal. If command not is not recognized you may need to setup the PATH or Environment Variables.</small>
+<small>*Note: You must have PHP and Composer installed and accessible via your terminal. If the command is not recognized, ensure they are correctly set in your PATH or Environment Variables.*</small>
 
-2. Run with default PHP web-server
+2. **Run with the built-in PHP web server:**
 ```bash
 php puko serve 4000
 ```
 
-3. Point your web browser to [http://localhost:4000](http://localhost:4000)
+3. **Open your browser:**
+Navigate to [http://localhost:4000](http://localhost:4000).
 
-<small>You can also run the code from Apache/Nginx/Docker.</small>
+<small>Puko can also be deployed using Apache, Nginx, or Docker.</small>
 
-If you're planning to make a Docker Container Image, you can review the default `Dockerfile` configuration and build the image with `docker build .` 
+If you plan to create a Docker Image, you can review the provided `Dockerfile` and build it using `docker build .`.
 
-<small>You can also follow the +-15 minutes quick start guide here to create web applications with Puko Framework.</small>
+<small>Follow our [~15-minute quick start guide]({{ site.baseurl }}{% link docs/quick-start.md %}) to build your first web application.</small>
 
 ### Configure Environment
 
-If you want to setup a universal configuration for your project, you can rename `.env.example` file to `.env` file and make the configuration adjusment. so that you can more easily work in your development environment.
+To set up a universal configuration for your project, rename the `.env.example` file to `.env` and adjust the settings to match your development environment.
 
 ---
 
@@ -59,12 +59,11 @@ Puko Framework is &copy; 2016-{{ "now" | date: "%Y" }} by [Didit Velliz](https:/
 
 ### License
 
-Puko Framework is distributed by an [MIT license](https://github.com/pukoframework/pukoframework.github.io/tree/master/LICENSE.txt).
+The Puko Framework is distributed under the [MIT license](https://github.com/pukoframework/pukoframework.github.io/tree/master/LICENSE.txt).
 
 ### Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change. Read more about becoming a contributor in [our GitHub repo](https://github.com/pukoframework/pukoframework.github.io#contributing).
+Before making a contribution, please discuss the changes you wish to make via an issue, email, or any other preferred method with the maintainers. Learn more about becoming a contributor in [our GitHub repository](https://github.com/pukoframework/pukoframework.github.io#contributing).
 
 #### Thank you to the contributors of Puko Framework!
 
@@ -78,6 +77,6 @@ email, or any other method with the owners of this repository before making a ch
 
 ### Code of Conduct
 
-Puko Framework is committed to fostering a welcoming community.
+The Puko Framework is committed to fostering a welcoming and inclusive community.
 
-[View our Code of Conduct](https://github.com/pukoframework/pukoframework.github.io/tree/master/CODE_OF_CONDUCT.md) on our GitHub repository.
+[View our Code of Conduct](https://github.com/pukoframework/pukoframework.github.io/tree/master/CODE_OF_CONDUCT.md) on GitHub.
